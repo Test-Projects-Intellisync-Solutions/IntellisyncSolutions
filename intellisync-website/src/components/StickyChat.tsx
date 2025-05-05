@@ -149,6 +149,8 @@ export const StickyChat: React.FC<StickyChatProps> = ({ onSend, eventContext }) 
   }, [messages]);
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState('');
+const inputRef = useRef<HTMLTextAreaElement>(null);
+const [userBlurred, setUserBlurred] = useState(false);
   const [systemPrompt, setSystemPrompt] = useState('You are Intellisync, a helpful and witty AI assistant persona.');
   const [showSystemPrompt, setShowSystemPrompt] = useState(false);
   
@@ -159,7 +161,11 @@ export const StickyChat: React.FC<StickyChatProps> = ({ onSend, eventContext }) 
     if (open && messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [messages, open]);
+    // Auto-focus input unless user intentionally blurred
+    if (!userBlurred && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [messages, open, userBlurred]);
 
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -180,6 +186,10 @@ export const StickyChat: React.FC<StickyChatProps> = ({ onSend, eventContext }) 
       ]);
     } finally {
       setLoading(false);
+      // Only refocus if user hasn't intentionally blurred
+      if (!userBlurred && inputRef.current) {
+        inputRef.current.focus();
+      }
     }
   };
 
@@ -301,6 +311,7 @@ export const StickyChat: React.FC<StickyChatProps> = ({ onSend, eventContext }) 
               }}
             >
               <Textarea
+                ref={inputRef}
                 value={input}
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setInput(e.target.value)}
                 rows={1}
@@ -313,6 +324,8 @@ export const StickyChat: React.FC<StickyChatProps> = ({ onSend, eventContext }) 
                     handleSend();
                   }
                 }}
+                onBlur={() => setUserBlurred(true)}
+                onFocus={() => setUserBlurred(false)}
               />
               <Button
                 type="submit"
