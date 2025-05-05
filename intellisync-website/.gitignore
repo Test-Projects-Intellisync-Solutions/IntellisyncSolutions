@@ -23,5 +23,13 @@ dist-ssr
 *.sln
 *.sw?
 
-# Server
-.env    
+# Server and Environment Variables
+.env
+.env.*
+.env.local
+.env.*.local
+.envrc
+*.env
+*.env.*
+
+# Do not commit secrets or API keys!
