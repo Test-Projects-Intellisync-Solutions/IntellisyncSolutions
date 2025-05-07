@@ -270,7 +270,7 @@ const [userBlurred, setUserBlurred] = useState(false);
             <div className="flex-1 overflow-y-auto px-4 py-2 space-y-2 custom-scrollbar">
               {messages.length === 0 && !loading && (
                 <div className="text-center text-gray-400 text-sm mt-8">
-                  Start a conversation with Intellisync!
+                  Start a conversation with Me!
                 </div>
               )}
               {messages.map((msg, i) => (
