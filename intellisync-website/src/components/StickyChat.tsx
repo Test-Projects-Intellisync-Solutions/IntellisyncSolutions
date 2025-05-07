@@ -3,22 +3,21 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../../lib/utils';
 import { Button } from '../../src/components/ui/Button';
 import { Textarea } from './ui/Textarea';
-import { Input } from '../../src/components/ui/Input';
+
 // // import { Send } from 'lucide-react';
 
 interface ChatInputProps {
-  onSend: (userPrompt: string, systemPrompt: string, eventContext?: string) => void;
+  onSend: (userPrompt: string, eventContext?: string) => void;
   loading?: boolean;
 }
 
 export const ChatInput: React.FC<ChatInputProps & { eventContext?: string }> = ({ onSend, loading, eventContext }) => {
   const [userPrompt, setUserPrompt] = useState('');
-  const [systemPrompt, setSystemPrompt] = useState('You are Intellisync, a helpful and witty AI assistant persona.');
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSend = () => {
     if (userPrompt.trim()) {
-      onSend(userPrompt, systemPrompt, eventContext);
+      onSend(userPrompt, eventContext);
       setUserPrompt('');
     }
   };
@@ -31,13 +30,6 @@ export const ChatInput: React.FC<ChatInputProps & { eventContext?: string }> = (
 
   return (
     <div className="w-full flex flex-col gap-2 bg-white/70 dark:bg-black/60 p-4 rounded-t-xl shadow-lg">
-      <label className="text-xs text-muted-foreground mb-1">System Prompt (AI Persona)</label>
-      <Input
-        value={systemPrompt}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSystemPrompt(e.target.value)}
-        className="mb-2 text-xs bg-background/90 text-black dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-300"
-        disabled={loading}
-      />
       <div className="flex items-end gap-2">
         <Textarea
           ref={inputRef}
@@ -108,10 +100,9 @@ interface StickyChatProps {
   /**
    * Function to call when the user sends a message.
    * @param userPrompt The user's message.
-   * @param systemPrompt The AI persona prompt.
    * @param eventContext The dynamic event context.
    */
-  onSend: (userPrompt: string, systemPrompt: string, eventContext?: string) => Promise<string>;
+  onSend: (userPrompt: string, eventContext?: string) => Promise<string>;
   /**
    * Optional dynamic event context.
    */
@@ -119,7 +110,7 @@ interface StickyChatProps {
 }
 
 
-import { X, ChevronDown, ChevronUp, Trash2 } from 'lucide-react';
+import { X, Trash2 } from 'lucide-react'; // re-import chevron up and down from lucide-react if implementing the system prompt toggle
 
 interface Message {
   role: 'user' | 'assistant';
@@ -151,8 +142,7 @@ export const StickyChat: React.FC<StickyChatProps> = ({ onSend, eventContext }) 
   const [input, setInput] = useState('');
 const inputRef = useRef<HTMLTextAreaElement>(null);
 const [userBlurred, setUserBlurred] = useState(false);
-  const [systemPrompt, setSystemPrompt] = useState('You are Intellisync, a helpful and witty AI assistant persona.');
-  const [showSystemPrompt, setShowSystemPrompt] = useState(false);
+
   
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -174,7 +164,7 @@ const [userBlurred, setUserBlurred] = useState(false);
     setInput('');
     setLoading(true);
     try {
-      const aiContent = await onSend(input, systemPrompt, eventContext);
+      const aiContent = await onSend(input, eventContext);
       setMessages((msgs) => [
         ...msgs,
         { role: 'assistant', content: aiContent, timestamp: Date.now() },
@@ -241,30 +231,15 @@ const [userBlurred, setUserBlurred] = useState(false);
               </div>
             </div>
 
-            {/* System prompt toggle */}
+            {/* System prompt toggle (temporarily commented out)
             <div className="flex items-center justify-between px-4 pt-2 pb-1">
               <span className="text-xs text-gray-500">AI Persona Prompt</span>
               <Button size="icon" variant="ghost" onClick={() => setShowSystemPrompt((v) => !v)}>
                 {showSystemPrompt ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
               </Button>
             </div>
-            <AnimatePresence>
-              {showSystemPrompt && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  className="overflow-hidden px-4"
-                >
-                  <Input
-                    value={systemPrompt}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSystemPrompt(e.target.value)}
-                    className="mb-2 text-xs bg-zinc-100 dark:bg-zinc-800 text-black dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-300 border border-border"
-                    disabled={loading}
-                  />
-                </motion.div>
-              )}
-            </AnimatePresence>
+            */}
+
 
             {/* Messages area */}
             <div className="flex-1 overflow-y-auto px-4 py-2 space-y-2 custom-scrollbar">
