@@ -68,7 +68,7 @@ export default function Products() {
                   {proj.image ? (
                     <img src={proj.image} alt={proj.name} className="object-contain w-full h-full" />
                   ) : (
-                    <proj.icon className="w-16 h-16 text-cta" />
+                    <proj.icon className="w-16 h-16 text-accent1" />
                   )}
                 </div>
                 <div className="flex-1 text-center md:text-left">
@@ -102,7 +102,7 @@ export default function Products() {
                   {proj.image ? (
                     <img src={proj.image} alt={proj.name} className="object-contain w-full h-full" />
                   ) : (
-                    <proj.icon className="w-16 h-16 text-cta" />
+                    <proj.icon className="w-16 h-16 text-accent1" />
                   )}
                 </div>
                 <div className="flex-1 text-center md:text-left">

@@ -3,12 +3,19 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../lib/utils';
 import { Button } from './ui/Button';
 import { Textarea } from './ui/Textarea';
+import { X, Trash2 } from 'lucide-react';
 
 // // import { Send } from 'lucide-react';
   
 interface ChatInputProps {
   onSend: (userPrompt: string, eventContext?: string) => void;
   loading?: boolean;
+}
+
+interface Message {
+  role: 'user' | 'assistant';
+  content: string;
+  timestamp: number;
 }
 
 export const ChatInput: React.FC<ChatInputProps & { eventContext?: string }> = ({ onSend, loading, eventContext }) => {
@@ -109,15 +116,6 @@ interface StickyChatProps {
   eventContext?: string;
 }
 
-
-import { X, Trash2 } from 'lucide-react'; // re-import chevron up and down from lucide-react if implementing the system prompt toggle
-
-interface Message {
-  role: 'user' | 'assistant';
-  content: string;
-  timestamp: number;
-}
-
 export const StickyChat: React.FC<StickyChatProps> = ({ onSend, eventContext }) => {
   // Load messages from sessionStorage (if available) on mount
   const [messages, setMessages] = useState<Message[]>(() => {
@@ -140,10 +138,9 @@ export const StickyChat: React.FC<StickyChatProps> = ({ onSend, eventContext }) 
   }, [messages]);
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState('');
-const inputRef = useRef<HTMLTextAreaElement>(null);
-const [userBlurred, setUserBlurred] = useState(false);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const [userBlurred, setUserBlurred] = useState(false);
 
-  
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -223,10 +220,10 @@ const [userBlurred, setUserBlurred] = useState(false);
               </div>
               <div className="flex items-center gap-1">
                 <Button size="icon" variant="ghost" onClick={() => setMessages([])} aria-label="Clear chat history" title="Clear chat history">
-                  <Trash2 className="w-5 h-5 text-red-500" />
+                  <Trash2 className="w-5 h-5 text-accent1" />
                 </Button>
                 <Button size="icon" variant="ghost" onClick={() => setOpen(false)} aria-label="Close chat">
-                  <X className="w-5 h-5" />
+                  <X className="w-5 h-5 text-accent1" />
                 </Button>
               </div>
             </div>
@@ -239,7 +236,6 @@ const [userBlurred, setUserBlurred] = useState(false);
               </Button>
             </div>
             */}
-
 
             {/* Messages area */}
             <div className="flex-1 overflow-y-auto px-4 py-2 space-y-2 custom-scrollbar">

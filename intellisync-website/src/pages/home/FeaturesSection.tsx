@@ -26,7 +26,7 @@ export default function FeaturesSection() {
           {/* AI Model Training */}
           <div className="flex items-start gap-4">
             <span className="bg-cta/10 rounded-full p-3">
-              <Brain className="w-8 h-8 text-cta" />
+              <Brain className="w-8 h-8 text-accent1" />
             </span>
             <div className="text-left">
               <h3 className="font-bold text-xl text-white">AI Model Training</h3>
@@ -46,7 +46,7 @@ export default function FeaturesSection() {
           {/* Custom MCP Servers */}
           <div className="flex items-start gap-4">
             <span className="bg-accent2/10 rounded-full p-3">
-              <Server className="w-8 h-8 text-cta" />
+              <Server className="w-8 h-8 text-accent1" />
             </span>
             <div className="text-left">
               <h3 className="font-bold text-xl text-white">Custom MCP Servers</h3>
@@ -56,7 +56,7 @@ export default function FeaturesSection() {
           {/* Personal & Business Use */}
           <div className="flex items-start gap-4">
             <span className="bg-primary/10 rounded-full p-3">
-              <Users className="w-8 h-8 text-cta" />
+              <Users className="w-8 h-8 text-accent1" />
             </span>
             <div className="text-left">
               <h3 className="font-bold text-xl text-white">Personal & Business Use</h3>

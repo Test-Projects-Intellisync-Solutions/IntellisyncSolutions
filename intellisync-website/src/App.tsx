@@ -6,6 +6,9 @@ import PromotionsPage from './pages/promotions/PromotionsPage';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import ProductsPage from "./pages/products/ProductsPage";
+import DisclaimerPage from "./pages/disclaimer";
+import PrivacyPage from "./pages/privacy";
+import TermsPage from "./pages/terms";
 
 
 
@@ -30,6 +33,12 @@ function ChatWithContext() {
         return 'GPT Builder';
       case '/pricing':
         return 'Pricing Page';
+      case '/disclaimer':
+        return 'Disclaimer Page';
+      case '/privacy':
+        return 'Privacy Policy Page';
+      case '/terms':
+        return 'Terms of Service Page';
       case '/':
         return 'Home Page';
       default:
@@ -51,6 +60,9 @@ function App() {
           <Route path="/promotions" element={<PromotionsPage />} />
           <Route path="/gptbuilder" element={<GPTBuilder />} />
           <Route path="/pricing" element={<Pricing />} />
+          <Route path="/disclaimer" element={<DisclaimerPage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="/terms" element={<TermsPage />} />
         </Routes>
         {/* StickyChat now gets eventContext from ChatWithContext, which is inside the Router context */}
         <ChatWithContext />

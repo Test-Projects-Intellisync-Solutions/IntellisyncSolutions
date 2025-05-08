@@ -1,6 +1,6 @@
 import React from 'react';
-import { AnimatedTabsHover } from './AnimatedTabsHover';
 import { Button } from './ui/Button';
+import { Info, Package, DollarSign, Percent, Bot, Mail, Home as HomeIcon } from 'lucide-react';
 
 const Header: React.FC = () => {
   return (
@@ -11,11 +11,30 @@ const Header: React.FC = () => {
         <span className="text-2xl font-header font-bold text-surface">Intellisync Solutions</span>
       </div>
       <div className="flex flex-1 justify-center">
-        <AnimatedTabsHover />
+        <nav className="flex flex-col md:flex-row gap-2 md:gap-6 font-body text-base items-center md:items-start">
+  <a href="/" className="flex items-center gap-2 hover:text-accent1 transition-colors">
+    <HomeIcon className="w-5 h-5 text-accent1" /> Home
+  </a>
+          <a href="/about" className="flex items-center gap-2 hover:text-accent1 transition-colors">
+            <Info className="w-5 h-5 text-accent1" /> About
+          </a>
+          <a href="/products" className="flex items-center gap-2 hover:text-accent1 transition-colors">
+            <Package className="w-5 h-5 text-accent1" /> Products
+          </a>
+          <a href="/pricing" className="flex items-center gap-2 hover:text-accent1 transition-colors">
+            <DollarSign className="w-5 h-5 text-accent1" /> Pricing
+          </a>
+          <a href="/promotions" className="flex items-center gap-2 hover:text-accent1 transition-colors">
+            <Percent className="w-5 h-5 text-accent1" /> Promo
+          </a>
+          <a href="/gptbuilder" className="flex items-center gap-2 hover:text-accent1 transition-colors">
+            <Bot className="w-5 h-5 text-accent1" /> GPTBuilder
+          </a>
+        </nav>
       </div>
       <a href="/contact" className="ml-8">
-  <Button variant="default" size="lg">
-    Contact
+  <Button variant="default" size="lg" className="flex items-center gap-2">
+    <Mail className="w-5 h-5 text-accent1" /> Contact
   </Button>
 </a>
     </header>
