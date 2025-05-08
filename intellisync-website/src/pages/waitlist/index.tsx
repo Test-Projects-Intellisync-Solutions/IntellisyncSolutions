@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 import { waitlistConfig } from '../../data/waitlistConfig';
 import { 
   WaitlistVariant, 
@@ -192,9 +194,11 @@ const WaitlistPage: React.FC = () => {
   };
 
   return (
-    <div 
-      className="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-[#090d1f] via-[#1a1a2e] to-[#232946] py-8 px-4 relative overflow-hidden"
-    >
+    <>
+      <Header />
+      <div 
+        className="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-[#090d1f] via-[#1a1a2e] to-[#232946] py-8 px-4 relative overflow-hidden"
+      >
       {/* Animated glassmorphic overlays similar to home page */}
       <div className="absolute inset-0 pointer-events-none z-0">
         <div className="absolute top-[-8%] left-[-5%] w-[36vw] h-[36vw] bg-gradient-to-tr from-cta/40 to-accent1/30 rounded-full blur-3xl opacity-70 animate-pulse-slow" />
@@ -248,7 +252,10 @@ const WaitlistPage: React.FC = () => {
         </AnimatePresence>
       </div>
     </div>
+      <Footer />
+    </>
   );
+
 };
 
 export default WaitlistPage;

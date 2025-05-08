@@ -4,8 +4,101 @@ import { cn } from '../lib/utils';
 import { Button } from './ui/Button';
 import { Textarea } from './ui/Textarea';
 import { X, Trash2 } from 'lucide-react';
+import SyntherionResponse from './ui/SyntherionResponse';
 
-// // import { Send } from 'lucide-react';
+// Helper function to extract bullets from malformed JSON
+const extractBullets = (jsonString: string): string[] => {
+  try {
+    // Look for the bullets array pattern
+    const bulletsMatch = jsonString.match(/"bullets":\s*\[(.*?)\]/s);
+    if (bulletsMatch && bulletsMatch[1]) {
+      // Extract individual bullet items
+      const bulletItems = bulletsMatch[1].match(/"([^"]+)"/g);
+      if (bulletItems) {
+        return bulletItems.map(item => item.replace(/"/g, ''));
+      }
+    }
+  } catch (e) {
+    console.error('Error extracting bullets:', e);
+  }
+  return [];
+};
+
+// Debug utility for JSON parsing with enhanced error recovery
+const debugJsonParse = (jsonString: string) => {
+  console.log('Attempting to parse JSON string:', jsonString);
+  console.log('String length:', jsonString.length);
+  console.log('First 20 chars:', JSON.stringify(jsonString.substring(0, 20)));
+  console.log('Last 20 chars:', JSON.stringify(jsonString.substring(jsonString.length - 20)));
+  
+  try {
+    const parsed = JSON.parse(jsonString);
+    console.log('Successfully parsed JSON:', parsed);
+    return parsed;
+  } catch (error: any) {
+    console.error('Failed to parse JSON:', error);
+    
+    // If we have a specific position where the error occurred, try to fix it
+    if (error && typeof error.message === 'string') {
+      const positionMatch = error.message.match(/position (\d+)/i);
+      if (positionMatch && positionMatch[1]) {
+        const errorPosition = parseInt(positionMatch[1]);
+        console.log(`Error at position ${errorPosition}, attempting to fix...`);
+        
+        // Check if the error is around position 573 (specific issue we've seen)
+        if (errorPosition >= 570 && errorPosition <= 580 && jsonString.includes('"takeaway"')) {
+          console.log('Detected the specific error at position ~573, applying targeted fix');
+          // This is likely the issue with missing closing brace after takeaway
+          try {
+            // Extract all the key parts and rebuild the JSON object manually
+            const sectionMatch = jsonString.match(/"section":\s*"([^"]+)"/i);
+            const bodyMatch = jsonString.match(/"body":\s*"([^"]+)"/i);
+            const reasoningMatch = jsonString.match(/"reasoning":\s*"([^"]+)"/i);
+            const takeawayMatch = jsonString.match(/"takeaway":\s*"([^"]+)"/i);
+            
+            if (sectionMatch && bodyMatch && takeawayMatch) {
+              const fixedJson = {
+                section: sectionMatch[1],
+                body: bodyMatch[1],
+                reasoning: reasoningMatch ? reasoningMatch[1] : "Here's my reasoning.",
+                bullets: extractBullets(jsonString),
+                takeaway: takeawayMatch[1]
+              };
+              console.log('Successfully created fixed JSON for position 573 issue:', fixedJson);
+              return fixedJson;
+            }
+          } catch (e) {
+            console.error('Failed to fix position 573 issue:', e);
+          }
+        }
+        
+        // General case for missing closing brace or bracket
+        if (jsonString.includes('"takeaway"')) {
+          // Common error: missing closing brace after takeaway
+          const takeawayMatch = jsonString.match(/"takeaway":\s*"([^"]+)"/i);
+          if (takeawayMatch) {
+            console.log('Found takeaway, trying to fix JSON structure');
+            // Reconstruct the JSON with proper structure
+            try {
+              const fixedJson = {
+                section: jsonString.match(/"section":\s*"([^"]+)"/i)?.[1] || "Response",
+                body: jsonString.match(/"body":\s*"([^"]+)"/i)?.[1] || "Here's what you need to know.",
+                reasoning: jsonString.match(/"reasoning":\s*"([^"]+)"/i)?.[1] || "Let me explain why.",
+                bullets: extractBullets(jsonString),
+                takeaway: takeawayMatch[1]
+              };
+              console.log('Created fixed JSON object:', fixedJson);
+              return fixedJson;
+            } catch (e) {
+              console.error('Failed to create fixed JSON:', e);
+            }
+          }
+        }
+      }
+    }
+    return null;
+  }
+};
   
 interface ChatInputProps {
   onSend: (userPrompt: string, eventContext?: string) => void;
@@ -16,6 +109,8 @@ interface Message {
   role: 'user' | 'assistant';
   content: string;
   timestamp: number;
+  // For assistant messages, we'll store the parsed JSON response
+  parsedResponse?: any;
 }
 
 export const ChatInput: React.FC<ChatInputProps & { eventContext?: string }> = ({ onSend, loading, eventContext }) => {
@@ -74,6 +169,52 @@ interface ChatModelResponseProps {
 }
 
 export const ChatModelResponse: React.FC<ChatModelResponseProps> = ({ response, visible, loading }) => {
+  // Try to parse the response as JSON using our debug utility
+  let parsedResponse = null;
+  
+  if (typeof response === 'string') {
+    // Log the raw response for debugging
+    console.log('ChatModelResponse - Raw response:', response);
+    
+    // First try to parse the raw response
+    parsedResponse = debugJsonParse(response);
+    
+    // If that fails, try with trimming
+    if (!parsedResponse) {
+      const trimmedResponse = response.trim();
+      console.log('ChatModelResponse - Trying with trimmed response');
+      parsedResponse = debugJsonParse(trimmedResponse);
+      
+      // If still failing, try more aggressive cleaning
+      if (!parsedResponse && trimmedResponse.startsWith('{') && trimmedResponse.endsWith('}')) {
+        console.log('ChatModelResponse - Trying with aggressive cleaning');
+        const cleanedResponse = trimmedResponse
+          .replace(/^\ufeff/g, '')
+          .replace(/\\n/g, '\n')
+          .replace(/\\r/g, '\r')
+          .replace(/\\t/g, '\t');
+        parsedResponse = debugJsonParse(cleanedResponse);
+      }
+    }
+    
+    // Manual fallback if parsing failed but response looks like JSON
+    if (!parsedResponse && response.includes('"section"')) {
+      console.log('ChatModelResponse - Attempting manual JSON extraction');
+      try {
+        // Try to extract the JSON by finding the first { and last }
+        const firstBrace = response.indexOf('{');
+        const lastBrace = response.lastIndexOf('}');
+        
+        if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+          const jsonSubstring = response.substring(firstBrace, lastBrace + 1);
+          parsedResponse = debugJsonParse(jsonSubstring);
+        }
+      } catch (e) {
+        console.error('ChatModelResponse - Manual JSON extraction failed:', e);
+      }
+    }
+  }
+
   return (
     <AnimatePresence>
       {visible && (
@@ -83,16 +224,18 @@ export const ChatModelResponse: React.FC<ChatModelResponseProps> = ({ response, 
           exit={{ opacity: 0, y: 40 }}
           transition={{ duration: 0.3 }}
           className={cn(
-            'w-full p-4 rounded-xl shadow-2xl border border-border',
-            'bg-background/95 dark:bg-zinc-900/95 text-black dark:text-white',
-            'backdrop-blur-lg',
+            'w-full rounded-xl border border-border',
             loading ? 'animate-pulse' : ''
           )}
           style={{ minHeight: 56 }}
         >
-          <div className="whitespace-pre-line break-words text-base min-h-[1.5em]">
-            {response}
-          </div>
+          {parsedResponse ? (
+            <SyntherionResponse data={parsedResponse} />
+          ) : (
+            <div className="p-4 whitespace-pre-line break-words text-base min-h-[1.5em] bg-background/95 dark:bg-zinc-900/95 text-black dark:text-white">
+              {response}
+            </div>
+          )}
         </motion.div>
       )}
     </AnimatePresence>
@@ -155,27 +298,83 @@ export const StickyChat: React.FC<StickyChatProps> = ({ onSend, eventContext }) 
   }, [messages, open, userBlurred]);
 
   const handleSend = async () => {
-    if (!input.trim()) return;
-    const userMsg: Message = { role: 'user', content: input, timestamp: Date.now() };
-    setMessages((msgs) => [...msgs, userMsg]);
-    setInput('');
-    setLoading(true);
-    try {
-      const aiContent = await onSend(input, eventContext);
-      setMessages((msgs) => [
-        ...msgs,
-        { role: 'assistant', content: aiContent, timestamp: Date.now() },
-      ]);
-    } catch {
-      setMessages((msgs) => [
-        ...msgs,
-        { role: 'assistant', content: 'Error getting response', timestamp: Date.now() },
-      ]);
-    } finally {
-      setLoading(false);
-      // Only refocus if user hasn't intentionally blurred
-      if (!userBlurred && inputRef.current) {
-        inputRef.current.focus();
+    if (input.trim()) {
+      // Add user message to chat
+      const userMessage: Message = {
+        role: 'user',
+        content: input,
+        timestamp: Date.now()
+      };
+      
+      setMessages(prev => [...prev, userMessage]);
+      setInput('');
+      setLoading(true);
+      
+      try {
+        // Get response from AI
+        const response = await onSend(input, eventContext);
+        
+        // Try to parse the response as JSON using our debug utility
+        let parsedResponse = null;
+        
+        // Check if the response is already a valid JSON object string
+        if (typeof response === 'string') {
+          // Log the raw response for debugging
+          console.log('Raw AI response:', response);
+          
+          // First try to parse the raw response
+          parsedResponse = debugJsonParse(response);
+          
+          // If that fails, try with trimming
+          if (!parsedResponse) {
+            const trimmedResponse = response.trim();
+            console.log('Trying with trimmed response');
+            parsedResponse = debugJsonParse(trimmedResponse);
+            
+            // If still failing, try more aggressive cleaning
+            if (!parsedResponse && trimmedResponse.startsWith('{') && trimmedResponse.endsWith('}')) {
+              console.log('Trying with aggressive cleaning');
+              // Remove any potential BOM, non-standard whitespace, or escape sequences
+              const cleanedResponse = trimmedResponse
+                .replace(/^\ufeff/g, '')
+                .replace(/\\n/g, '\n')
+                .replace(/\\r/g, '\r')
+                .replace(/\\t/g, '\t');
+              parsedResponse = debugJsonParse(cleanedResponse);
+            }
+          }
+        }
+        
+        // Manual fallback if parsing failed but response looks like JSON
+        if (!parsedResponse && typeof response === 'string' && response.includes('"section"')) {
+          console.log('Attempting manual JSON extraction');
+          try {
+            // Try to extract the JSON by finding the first { and last }
+            const firstBrace = response.indexOf('{');
+            const lastBrace = response.lastIndexOf('}');
+            
+            if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+              const jsonSubstring = response.substring(firstBrace, lastBrace + 1);
+              parsedResponse = debugJsonParse(jsonSubstring);
+            }
+          } catch (e) {
+            console.error('Manual JSON extraction failed:', e);
+          }
+        }
+        
+        // Add AI response to chat
+        const aiMessage: Message = {
+          role: 'assistant',
+          content: response,
+          timestamp: Date.now(),
+          parsedResponse: parsedResponse
+        };
+        
+        setMessages(prev => [...prev, aiMessage]);
+      } catch (error) {
+        console.error('Error getting AI response:', error);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -252,15 +451,67 @@ export const StickyChat: React.FC<StickyChatProps> = ({ onSend, eventContext }) 
                   transition={{ delay: i * 0.02 }}
                   className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
-                  <div
-                    className={`px-4 py-2 rounded-2xl max-w-[80%] whitespace-pre-line break-words text-base shadow-sm ${
-                      msg.role === 'user'
-                        ? 'bg-blue-500 text-white rounded-br-md'
-                        : 'bg-zinc-100 dark:bg-zinc-800 text-black dark:text-white rounded-bl-md'
-                    }`}
-                  >
-                    {msg.content}
-                  </div>
+                  {msg.role === 'user' ? (
+                    <div className="px-4 py-2 rounded-2xl max-w-[80%] whitespace-pre-line break-words text-base shadow-sm bg-blue-500 text-white rounded-br-md">
+                      {msg.content}
+                    </div>
+                  ) : (
+                    <div className="max-w-[95%]">
+                      {msg.parsedResponse ? (
+                        <SyntherionResponse data={msg.parsedResponse} animate={false} />
+                      ) : (
+                        // Try to parse the content as JSON if it's a string that looks like JSON
+                        typeof msg.content === 'string' && (msg.content.includes('"section"') || (msg.content.trim().startsWith('{') && msg.content.trim().endsWith('}'))) ? (
+                          (() => {
+                            let parsedContent = null;
+                            
+                            // First try direct parsing
+                            if (typeof msg.content === 'string') {
+                              parsedContent = debugJsonParse(msg.content);
+                              
+                              // If that fails, try with trimming
+                              if (!parsedContent) {
+                                const trimmedContent = msg.content.trim();
+                                parsedContent = debugJsonParse(trimmedContent);
+                                
+                                // If still failing, try manual extraction
+                                if (!parsedContent && msg.content.includes('"section"')) {
+                                  try {
+                                    // Extract JSON by finding the first { and last }
+                                    const firstBrace = msg.content.indexOf('{');
+                                    const lastBrace = msg.content.lastIndexOf('}');
+                                    
+                                    if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+                                      const jsonSubstring = msg.content.substring(firstBrace, lastBrace + 1);
+                                      parsedContent = debugJsonParse(jsonSubstring);
+                                    }
+                                  } catch (e) {
+                                    console.error('Message rendering - Manual extraction failed:', e);
+                                  }
+                                }
+                              }
+                            }
+                            
+                            // If we successfully parsed the JSON, render it with SyntherionResponse
+                            if (parsedContent) {
+                              return <SyntherionResponse data={parsedContent} animate={false} />;
+                            } else {
+                              // Fallback to plain text rendering
+                              return (
+                                <div className="px-4 py-2 rounded-2xl whitespace-pre-line break-words text-base shadow-sm bg-zinc-100 dark:bg-zinc-800 text-black dark:text-white rounded-bl-md">
+                                  {msg.content}
+                                </div>
+                              );
+                            }
+                          })()
+                        ) : (
+                          <div className="px-4 py-2 rounded-2xl whitespace-pre-line break-words text-base shadow-sm bg-zinc-100 dark:bg-zinc-800 text-black dark:text-white rounded-bl-md">
+                            {msg.content}
+                          </div>
+                        )
+                      )}
+                    </div>
+                  )}
                 </motion.div>
               ))}
               {loading && (
