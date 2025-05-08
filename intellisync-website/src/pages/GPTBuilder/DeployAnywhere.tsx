@@ -1,6 +1,6 @@
 import React from "react";
-import { Card } from "../../src/components/ui/card";
-import { Button } from "../../src/components/ui/button";
+import { Card } from "../../components/ui/Card";
+import { Button } from "../../components/ui/Button";
 
 /**
  * DeployAnywhere Section for GPT Builder Page

@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Button } from "../../src/components/ui/button";
+import { Button } from "../../components/ui/Button";
 
 /**
  * Hero Section for GPT Builder Page

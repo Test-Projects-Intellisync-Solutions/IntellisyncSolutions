@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { cn } from '../../lib/utils';
-import { Button } from '../../src/components/ui/Button';
+import { cn } from '../lib/utils';
+import { Button } from './ui/Button';
 import { Textarea } from './ui/Textarea';
 
 // // import { Send } from 'lucide-react';
-
+  
 interface ChatInputProps {
   onSend: (userPrompt: string, eventContext?: string) => void;
   loading?: boolean;

@@ -1,5 +1,5 @@
 import React from "react";
-import { Card } from "../../src/components/ui/card";
+import { Card } from "../../components/ui/Card";
 import { LucideIcon, Lock, Rocket, Brain, Palette, MessageCircle, Wrench, BarChart, FileText } from "lucide-react";
 
 /**

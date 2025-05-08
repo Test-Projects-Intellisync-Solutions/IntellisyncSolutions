@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Button } from '../../src/components/ui/Button'; // or wherever your Button component lives
+import { Button } from '../../components/ui/Button'; // or wherever your Button component lives
 
 // Example hero image – replace with your actual image
 const HERO_IMAGE_URL = '/assets/images/homeHero.png';

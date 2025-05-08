@@ -9,12 +9,12 @@
  * - Handles streaming, session management, and chunked response assembly.
  *
  * @param userPrompt - The user's input message.
- * @param _ - (Unused) System prompt; backend always uses its own.
+
  * @param eventContext - Optional string describing the user's current page or context.
  * @returns The streamed AI response as a string.
  */
 
-export async function streamModelResponse(userPrompt: string, _: string, eventContext?: string): Promise<string> {
+export async function streamModelResponse(userPrompt: string, eventContext?: string): Promise<string> {
   const controller = new AbortController();
   
   // We'll let the server use its DEFAULT_SYSTEM_PROMPT instead of sending our own

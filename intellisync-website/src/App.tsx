@@ -1,8 +1,8 @@
-import Home from "../pages/home/Home";
-import About from "../pages/about/About";
+import Home from "./pages/home/Home";
+import About from "./pages/about/About";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import ProductsPage from "../pages/products/ProductsPage";
+import ProductsPage from "./pages/products/ProductsPage";
 
 
 // Placeholder components for missing pages

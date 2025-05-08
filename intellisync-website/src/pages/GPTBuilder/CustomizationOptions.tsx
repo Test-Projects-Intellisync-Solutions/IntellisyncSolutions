@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Alert } from "../../src//components/ui/alert";
+import { Alert } from "../../components/ui/Alert";
 
 /**
  * CustomizationOptions Section for GPT Builder Page
