@@ -7,7 +7,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 
 const buttonVariants = {
-  default: "bg-cta text-white hover:bg-accent1",
+  default: "bg-accent1 text-[#232946] font-bold hover:bg-accent1/90",
   destructive: "bg-error text-white hover:bg-accent1",
   outline: "border border-accent2 bg-transparent text-primary hover:bg-surface",
   secondary: "bg-surface text-primary hover:bg-accent1",

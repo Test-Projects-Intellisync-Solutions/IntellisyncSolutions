@@ -1,4 +1,6 @@
 import React from "react";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 import Hero from "./Hero";
 import FeaturesOverview from "./FeaturesOverview";
 import HowItWorks from "./HowItWorks";
@@ -6,7 +8,7 @@ import IngestionMethods from "./IngestionMethods";
 import CustomizationOptions from "./CustomizationOptions";
 import DeployAnywhere from "./DeployAnywhere";
 import LiveFeedback from "./LiveFeedback";
-import CallToAction from "./CallToAction";
+import CustomCTA from "../home/CustomCTA";
 
 /**
  * GPT Builder Marketing + Onboarding Page
@@ -16,6 +18,7 @@ import CallToAction from "./CallToAction";
 const GPTBuilderPage: React.FC = () => {
   return (
     <main className="w-full">
+      <Header />
       <Hero />
       <FeaturesOverview />
       <HowItWorks />
@@ -23,8 +26,9 @@ const GPTBuilderPage: React.FC = () => {
       <CustomizationOptions />
       <DeployAnywhere />
       <LiveFeedback />
-      <CallToAction />
-    </main>
+    <CustomCTA />
+      <Footer />
+      </main>
   );
 };
 

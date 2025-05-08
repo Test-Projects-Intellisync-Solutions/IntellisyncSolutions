@@ -1,5 +1,6 @@
 
 import { motion } from "framer-motion";
+import { Button } from "../../components/ui/Button";
 
 const buttonVariants = {
   initial: { scale: 1 },
@@ -47,12 +48,9 @@ export default function CustomCTA() {
               whileTap="tap"
               style={{ display: "inline-block" }}
             >
-              <img
-                src="/assets/images/GetStartedButton.png"
-                alt="Get Started"
-                className="h-32 w-auto"
-                loading="lazy"
-              />
+              <Button className="bg-accent1 text-[#232946] font-bold hover:bg-accent1/90 px-10 py-6 text-2xl rounded-full shadow-lg">
+                Get Started
+              </Button>
             </motion.a>
             <motion.a
               href="/about"
@@ -64,12 +62,9 @@ export default function CustomCTA() {
               whileTap="tap"
               style={{ display: "inline-block" }}
             >
-              <img
-                src="/assets/images/LearnMoreButton.png"
-                alt="Learn More"
-                className="h-32 w-auto"
-                loading="lazy"
-              />
+              <Button className="bg-accent1 text-[#232946] font-bold hover:bg-accent1/90 px-10 py-6 text-2xl rounded-full shadow-lg">
+                Learn More
+              </Button>
             </motion.a>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { AnimatedTabsHover } from './AnimatedTabsHover';
+import { Button } from './ui/Button';
 
 const Header: React.FC = () => {
   return (
@@ -12,9 +13,11 @@ const Header: React.FC = () => {
       <div className="flex flex-1 justify-center">
         <AnimatedTabsHover />
       </div>
-      <a href="/contact" className="ml-8 transition-transform hover:scale-105 duration-300">
-        <img src="/assets/images/ContactButton.png" alt="Contact Us" className="h-16 w-20" />
-      </a>
+      <a href="/contact" className="ml-8">
+  <Button variant="default" size="lg">
+    Contact
+  </Button>
+</a>
     </header>
   );
 };

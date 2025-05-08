@@ -1,13 +1,14 @@
 import Home from "./pages/home/Home";
 import About from "./pages/about/About";
+import GPTBuilder from './pages/GPTBuilder';
+// Import PromotionsPage directly from the component file to avoid circular dependencies
+import PromotionsPage from './pages/promotions/PromotionsPage';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import ProductsPage from "./pages/products/ProductsPage";
 
 
-// Placeholder components for missing pages
-const Promotions = () => <div className="min-h-screen flex items-center justify-center text-3xl text-accent1">Promotions Page Coming Soon</div>;
-const GPTBuilder = () => <div className="min-h-screen flex items-center justify-center text-3xl text-accent1">GPTBuilder Page Coming Soon</div>;
+
 const Pricing = () => <div className="min-h-screen flex items-center justify-center text-3xl text-accent1">Pricing Page Coming Soon</div>;
 
 import { streamModelResponse } from "./lib/streamModelResponse";
@@ -47,7 +48,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/products" element={<ProductsPage />} />
-          <Route path="/promotions" element={<Promotions />} />
+          <Route path="/promotions" element={<PromotionsPage />} />
           <Route path="/gptbuilder" element={<GPTBuilder />} />
           <Route path="/pricing" element={<Pricing />} />
         </Routes>

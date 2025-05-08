@@ -2,7 +2,7 @@ import * as React from "react"
 import { cn } from "../../lib/utils"
 
 export interface TabsProps {
-  tabs: { label: string; content: React.ReactNode }[]
+  tabs: { label: React.ReactNode; content: React.ReactNode }[]
   defaultIndex?: number
   className?: string
 }

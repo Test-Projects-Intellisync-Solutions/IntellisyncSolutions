@@ -1,13 +1,14 @@
 import { motion } from "framer-motion";
 import { Rocket, Code, Wrench, Clock } from "lucide-react";
+// Use public URL for GPTBuilderHero image
 
 // Example data - replace or extend as needed
 const CURRENT_PROJECTS = [
   {
     icon: Rocket,
-    name: "Intellisync AI Assistant",
-    desc: "A powerful AI assistant for business and personal productivity, available on web and mobile.",
-    image: "/assets/images/ai-assistant.png",
+    name: "Intellisync GPT Builder",
+    desc: "A powerful AI assistant for business use cases, available on web and mobile.",
+    image: "/assets/images/GPTBuilderHero.png",
   },
   {
     icon: Code,

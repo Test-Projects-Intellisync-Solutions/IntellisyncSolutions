@@ -44,7 +44,7 @@ const Hero: React.FC = () => {
             transition={{ delay: 0.2, duration: 0.7, ease: 'easeOut' }}
           >
             <Button
-              className="bg-[#4C5BFF] hover:bg-[#6C7AFF] text-white font-semibold px-6 py-3 rounded-full shadow-lg"
+              className="bg-accent1 text-[#232946] font-bold hover:bg-accent1/90 px-6 py-3 rounded-full shadow-lg"
               aria-label="Start Your AI Journey"
             >
               Start Your AI Journey
