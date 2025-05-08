@@ -9,6 +9,8 @@ import ProductsPage from "./pages/products/ProductsPage";
 import DisclaimerPage from "./pages/disclaimer";
 import PrivacyPage from "./pages/privacy";
 import TermsPage from "./pages/terms";
+import WaitlistPage from "./pages/waitlist";
+import ScrollToTop from './components/ScrollToTop';
 
 
 
@@ -33,6 +35,8 @@ function ChatWithContext() {
         return 'GPT Builder';
       case '/pricing':
         return 'Pricing Page';
+      case '/waitlist':
+        return 'Waitlist Page';
       case '/disclaimer':
         return 'Disclaimer Page';
       case '/privacy':
@@ -53,6 +57,7 @@ function App() {
   return (
     <HelmetProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -60,6 +65,7 @@ function App() {
           <Route path="/promotions" element={<PromotionsPage />} />
           <Route path="/gptbuilder" element={<GPTBuilder />} />
           <Route path="/pricing" element={<Pricing />} />
+          <Route path="/waitlist" element={<WaitlistPage />} />
           <Route path="/disclaimer" element={<DisclaimerPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/terms" element={<TermsPage />} />

@@ -39,7 +39,7 @@ export default function CustomCTA() {
           </motion.p>
           <div className="flex flex-col md:flex-row gap-6 justify-center mb-10">
             <motion.a
-              href="/contact"
+              href="/waitlist"
               tabIndex={0}
               className="bg-transparent"
               variants={buttonVariants}
@@ -49,7 +49,7 @@ export default function CustomCTA() {
               style={{ display: "inline-block" }}
             >
               <Button className="bg-accent1 text-[#232946] font-bold hover:bg-accent1/90 px-10 py-6 text-2xl rounded-full shadow-lg">
-                Get Started
+                Join Early Access
               </Button>
             </motion.a>
             <motion.a

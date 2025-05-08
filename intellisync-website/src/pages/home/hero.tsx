@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { Button } from '../../components/ui/Button'; // or wherever your Button component lives
 
 // Example hero image – replace with your actual image
@@ -43,12 +44,14 @@ const Hero: React.FC = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2, duration: 0.7, ease: 'easeOut' }}
           >
-            <Button
-              className="bg-accent1 text-[#232946] font-bold hover:bg-accent1/90 px-6 py-3 rounded-full shadow-lg"
+            <Link to="/waitlist" tabIndex={0} className="bg-transparent">
+              <Button
+                className="bg-accent1 text-[#232946] font-bold hover:bg-accent1/90 px-6 py-3 rounded-full shadow-lg"
               aria-label="Start Your AI Journey"
-            >
-              Start Your AI Journey
-            </Button>
+              >
+                Start Your AI Journey
+              </Button>
+            </Link>
           </motion.div>
         </div>
         

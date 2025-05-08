@@ -126,6 +126,10 @@ const Footer: React.FC = () => {
             Zero tracking by design. Your data stays yours.
           </p>
         </div>
+
+      </div>
+      {/* Centered Designed by section */}
+      <div className="max-w-7xl mx-auto mt-4 text-center">
         <p className="text-xs text-accent1">
           Designed with <span className="text-accent1">❤</span> by Intellisync Solutions
         </p>

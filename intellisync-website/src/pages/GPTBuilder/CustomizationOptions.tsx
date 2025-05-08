@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 /**
  * CustomizationOptions Section for GPT Builder Page
@@ -79,17 +80,34 @@ const CustomizationOptions: React.FC = () => (
       {/* Animated preview (mocked) */}
       
       <motion.div
-        className="mt-12 w-full bg-black/30 rounded-2xl p-6 shadow-xl backdrop-blur-md border border-accent2 flex items-center justify-center"
+        className="mt-12 w-full relative overflow-visible bg-gradient-to-br from-[#090d1f]/80 via-[#1a1a2e]/90 to-[#232946]/95 rounded-3xl p-8 shadow-2xl backdrop-blur-lg border border-accent2 flex flex-col md:flex-row items-center justify-between gap-8"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: 'easeOut', delay: 0.2 }}
       >
-        <div className="h-32 w-32 bg-gradient-to-br from-cta/80 to-accent1/80 rounded-full flex items-center justify-center animate-pulse-slow">
-          <span className="text-4xl">🤖</span>
+        {/* Animated Glow Behind Preview */}
+        <div className="absolute -top-10 -left-10 w-48 h-48 bg-gradient-to-br from-cta/40 via-accent1/30 to-transparent rounded-full blur-3xl opacity-60 animate-pulse pointer-events-none z-0" />
+        <div className="flex items-center gap-6 z-10">
+          <div className="h-32 w-32 bg-gradient-to-br from-cta/80 to-accent1/80 rounded-full flex items-center justify-center animate-pulse-slow shadow-xl border-4 border-accent2/50">
+            <span className="text-5xl">🤖</span>
+          </div>
+          <div className="text-left">
+            <h3 className="font-extrabold text-2xl md:text-3xl bg-gradient-to-tr from-cta via-accent1 to-white bg-clip-text text-transparent mb-2 drop-shadow-lg">Live Preview</h3>
+            <p className="text-lg text-accent1 mb-4 max-w-xs">See how your prompt changes model behavior in real-time.</p>
+          </div>
         </div>
-        <div className="ml-6 text-left">
-          <h3 className="font-bold text-xl text-white mb-2">Live Preview</h3>
-          <p className="text-accent1">See how your prompt changes model behavior in real-time.</p>
+        {/* CTA Button */}
+        <div className="flex flex-col items-center md:items-end z-10 w-full md:w-auto mt-6 md:mt-0">
+          <Link to="/waitlist" tabIndex={0} className="w-full md:w-auto">
+            <motion.button
+              className="bg-accent1 text-[#232946] font-bold hover:bg-accent1/90 px-8 py-4 text-lg md:text-xl rounded-full shadow-lg transition-colors duration-200"
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.97 }}
+              aria-label="Join the Waitlist"
+            >
+              Join Waitlist
+            </motion.button>
+          </Link>
         </div>
       </motion.div>
     </div>
