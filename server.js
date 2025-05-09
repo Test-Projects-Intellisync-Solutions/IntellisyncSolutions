@@ -6,12 +6,50 @@ import OpenAI from 'openai';
 import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
+// Import FAQ data for AI prompt context
+import { faqSections } from './intellisync-website/src/shared/faqData.js'; 
+
 
 // Load environment variables from .env
 dotenv.config();
 
 const app = express();
 let PORT = process.env.PORT || 5001;
+
+// ---
+// DEMO ENDPOINTS not being used in production for now: Show how we can use fs, path, and crypto as we build this backend out further.
+// ---
+
+/**
+ * Health check endpoint: Uses fs to append a log entry every time this endpoint is hit.
+ * Use this to for file writing, and in the future, use fs for logging, audit trails, or exporting data.
+ */
+app.get('/health', (req, res) => {
+  fs.appendFileSync('server_health.log', `Health check at ${new Date().toISOString()}\n`);
+  res.json({ status: 'ok', time: new Date().toISOString() });
+});
+
+/**
+ * Serve privacy policy: Uses path to safely construct a file path, and fs to check if it exists.
+ * Use this to serve static files, and later we can use path for uploads, downloads, or user file management.
+ */
+app.get('/privacy', (req, res) => {
+  const privacyPath = path.join(process.cwd(), 'static', 'privacy-policy.txt');
+  if (fs.existsSync(privacyPath)) {
+    res.sendFile(privacyPath);
+  } else {
+    res.status(404).send('Privacy policy not found.');
+  }
+});
+
+/**
+ * Generate API token: Uses crypto to create a secure random token.
+ * Use this to generate API tokens, and in the future, use crypto for session tokens, password hashing, or securing integrations.
+ */
+app.get('/generate-token', (req, res) => {
+  const token = crypto.randomBytes(16).toString('hex');
+  res.json({ token });
+});
 
 // Function to try binding to alternative ports if the default is in use
 const startServer = (port) => {
@@ -99,8 +137,18 @@ const DEFAULT_AI_CONFIG = {
 };
 
 // =====================  SYSTEM PROMPT (v3.1) & DEV CUSTOM INSTRUCTIONS ===================== //
-const DEFAULT_SYSTEM_PROMPT = `<!-- Syntherion System Prompt • v3.1 • 2025-05-09 -->
+// Helper to summarize FAQ data for prompt context
+function getFAQContextString() {
+  return faqSections.map(section => {
+    const faqs = section.faqs.map(faq => `Q: ${faq.question}\nA: ${faq.answer}`).join('\n');
+    return `Section: ${section.section}\n${faqs}`;
+  }).join('\n\n');
+}
 
+const FAQ_CONTEXT = getFAQContextString();
+
+const DEFAULT_SYSTEM_PROMPT = `<!-- Syntherion System Prompt • v3.1 • 2025-05-09 -->
+[FAQ CONTEXT]\n${FAQ_CONTEXT}\n---\n
 <Instruction>
   IMPORTANT: Always respond with a valid JSON object containing the following fields:
   {
@@ -524,7 +572,8 @@ ${eventContext}
     console.log(`[DEBUG] Last user message: ${JSON.stringify(messages[messages.length - 1])}`);
     console.log(`[DEBUG] Full processed messages: ${JSON.stringify(processedMessages)}`);
     
-    const stream = await openai.chat.completions.create(aiConfig);
+    // Optionally, you can inject FAQ_CONTEXT into the aiConfig or prompt here if dynamic context is required
+const stream = await openai.chat.completions.create(aiConfig);
 
     // Collect the full response to store in session history
     let fullResponse = '';

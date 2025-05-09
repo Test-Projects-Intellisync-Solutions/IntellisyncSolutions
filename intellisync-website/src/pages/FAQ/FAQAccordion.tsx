@@ -30,13 +30,14 @@ const FAQAccordion: React.FC<FAQAccordionProps> = ({ faqs }) => {
       ▶
     </motion.span>
   </button>
-  <AnimatePresence>
+  <AnimatePresence initial={false}>
     {openIndex === idx && (
       <motion.div
-        initial={{ height: 0, opacity: 0 }}
-        animate={{ height: 'auto', opacity: 1 }}
-        exit={{ height: 0, opacity: 0 }}
-        transition={{ duration: 0.3 }}
+        layout
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ opacity: { duration: 0.25 } }}
         className="overflow-hidden px-6 pb-4 text-accent1"
       >
         {faq.answer}

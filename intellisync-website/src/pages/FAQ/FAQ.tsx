@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
-import { faqSections, FAQSection } from './FAQcontent';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
+import { motion } from 'framer-motion';
+import { faqSections } from './FAQcontent';
 import FAQTabs from './FAQTabs';
 import FAQAccordion from './FAQAccordion';
-import { motion } from 'framer-motion';
 
 const gradientBg = 'bg-gradient-to-br from-[#090d1f] via-[#1a1a2e] to-[#232946]';
-const accent = 'text-accent1'; // gold/yellow accent from your Tailwind config
 
 const FAQ: React.FC = () => {
   const [activeTab, setActiveTab] = useState(0);
   const section = faqSections[activeTab];
 
   return (
+    <>
+    <Header />
     <section className={`relative min-h-screen py-16 px-4 ${gradientBg} text-white overflow-hidden`}>
   {/* Glassmorphic overlays for depth */}
   <div className="absolute inset-0 pointer-events-none z-0">
@@ -37,7 +40,9 @@ const FAQ: React.FC = () => {
     </div>
   </div>
 </section>
-  );
+    <Footer />
+    </> 
+      );
 };
 
 export default FAQ;
