@@ -2,6 +2,7 @@ import React from 'react';
 import { Facebook, Twitter, Linkedin, Info, Package, DollarSign, Percent, Bot, Mail, Home, MapPin, Phone, Calendar, Shield, FileText } from 'lucide-react';
 import { motion } from 'framer-motion';
 
+
 const Footer: React.FC = () => {
   return (
     <motion.footer 
@@ -71,6 +72,9 @@ const Footer: React.FC = () => {
             </a>
             <a href="/gptbuilder" className="flex items-center gap-2 hover:text-accent1 transition-colors group">
               <Bot size={16} className="text-accent1 group-hover:translate-x-1 transition-transform" /> GPTBuilder
+            </a>
+            <a href="/faq" className="flex items-center gap-2 hover:text-accent1 transition-colors group">
+              <Info size={16} className="text-accent1 group-hover:translate-x-1 transition-transform" /> FAQ
             </a>
           </nav>
         </div>

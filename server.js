@@ -302,7 +302,7 @@ Product-Specific Hooks
 
 GPT Builder
 
-What it is: Drag-and-drop platform for bespoke chatbots that ingest your docs, site, and FAQs.
+What it is: Drag-and-drop platform for customized and personalized chatbots that ingest your docs, site, and FAQs.
 Why it matters: Converts visitors 24/7 and slashes support tickets.
 Next step: Want a live demo? Email chris.june@intellisync.ca.
 Takeaway → Your brand’s new brain arrives pre-trained.
@@ -311,7 +311,7 @@ Takeaway → Your brand’s new brain arrives pre-trained.
 
 Mnemos
 
-What it is: Upload recordings or Zoom links; get crisp action items and follow-ups.
+What it is: Upload recordings or Zoom links or text based notes; get crisp action items and follow-ups with point by point summarization.
 Why it matters: No one reads raw transcripts—now they won’t have to.
 Next step: Trial it free on your next stand-up.
 Takeaway → Meetings end; insights linger.
@@ -329,7 +329,7 @@ Takeaway → Coffee budgets, conquered.
 
 Private MCP Servers
 
-What it is: Fully isolated model-context servers inside your VPC.
+What it is: Fully isolated model-context protocol servers inside your VPC.
 Why it matters: Zero data leaves your castle; AI knights stand guard.
 Next step: Schedule a security walkthrough.
 Takeaway → Fort Knox meets GPT.

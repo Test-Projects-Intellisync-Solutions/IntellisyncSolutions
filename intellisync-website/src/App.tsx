@@ -1,7 +1,7 @@
 import Home from "./pages/home/Home";
 import About from "./pages/about/About";
 import GPTBuilder from './pages/GPTBuilder';
-// Import PromotionsPage directly from the component file to avoid circular dependencies
+
 import PromotionsPage from './pages/promotions/PromotionsPage';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
@@ -10,6 +10,7 @@ import DisclaimerPage from "./pages/disclaimer";
 import PrivacyPage from "./pages/privacy";
 import TermsPage from "./pages/terms";
 import WaitlistPage from "./pages/waitlist";
+import FAQ from "./pages/FAQ/FAQ";
 import ScrollToTop from './components/ScrollToTop';
 
 
@@ -45,6 +46,8 @@ function ChatWithContext() {
         return 'Terms of Service Page';
       case '/':
         return 'Home Page';
+      case '/faq':
+        return 'FAQ Page';
       default:
         return `Unknown Route: ${pathname}`;
     }
@@ -65,6 +68,7 @@ function App() {
           <Route path="/promotions" element={<PromotionsPage />} />
           <Route path="/gptbuilder" element={<GPTBuilder />} />
           <Route path="/pricing" element={<Pricing />} />
+          <Route path="/faq" element={<FAQ />} />
           <Route path="/waitlist" element={<WaitlistPage />} />
           <Route path="/disclaimer" element={<DisclaimerPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
