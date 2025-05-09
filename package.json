@@ -1,8 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "build:faqData": "npx tsc intellisync-website/src/shared/faqData.ts --outDir intellisync-website/src/shared --declaration false --esModuleInterop true --module NodeNext --target es2019 --moduleResolution nodenext",
-    "dev": "npm run build:faqData && concurrently \"node server.js\" \"npm run dev --prefix intellisync-website\""
+    "dev": "concurrently \"node server.js\" \"npm run dev --prefix intellisync-website\""
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.4",

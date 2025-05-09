@@ -10,11 +10,14 @@ import StreamingText from "./StreamingText";
 const steps = [
   "Sign in",
   "Custom Name your GPT",
-  "Ingest data with our WebScraper util (URL, XML, Site Map), PDF's, Text",
-  "Add a custom Company logo or avatar",
-  "Customize instructions",
+  "Ingest data with our WebScraper utility (URL, XML & Site Map)",
+  "Ingest PDF's",
+  "Ingest Manual Text input",
+  "Add your custom logo or avatar",
+  "Customize your A.I. instructions",
   "Add optional initial Starter Prompts",
-  "Deploy your GPT to any platform",
+  "Deploy your GPT to any web based platform (Self-hosted or Script Embed)",
+  "Supported web languages: HTML, JavaScript, TypeScript, Vue, React, Angular, Svelte",
   "Track usage & improve",
 ];
 

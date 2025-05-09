@@ -56,7 +56,7 @@ const IngestionMethods: React.FC = () => (
                   </div>
                   <div className="flex-1">
                     <h3 className="font-bold text-xl text-white mb-3">PDF Upload</h3>
-                    <p className="text-accent1">Upload and ingest knowledge from PDF documents. Ideal for training your GPT on reports, manuals, or any document-based knowledge.</p>
+                    <p className="text-accent1">Upload and ingest unstructured knowledge from any PDF document. Ideal for training your GPT on reports, manuals, or any document-based knowledge.</p>
                   </div>
                 </motion.div>
               ),

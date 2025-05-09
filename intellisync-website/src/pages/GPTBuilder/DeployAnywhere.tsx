@@ -1,15 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "../../components/ui/Button";
+import { GPTEmbedModal } from "./GPTEmbedModal";
 
 /**
  * DeployAnywhere Section for GPT Builder Page
  * Two deployment cards: Self-hosted & Script Embed
  * Bonus tagline
  */
-const DeployAnywhere: React.FC = () => (
-  <section className="w-full py-20 px-4 md:px-0 bg-gradient-to-br from-[#090d1f] via-[#1a1a2e] to-[#232946]">
-    <div className="max-w-5xl mx-auto flex flex-col items-center">
+const DeployAnywhere: React.FC = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  return (
+    <section className="w-full py-20 px-4 md:px-0 bg-gradient-to-br from-[#090d1f] via-[#1a1a2e] to-[#232946]">
+      <div className="max-w-5xl mx-auto flex flex-col items-center">
       <motion.h2
         className="text-3xl md:text-5xl font-extrabold bg-gradient-to-tr from-cta via-accent1 to-white bg-clip-text text-transparent mb-10 drop-shadow-lg text-center"
         initial={{ opacity: 0, y: 24 }}
@@ -31,11 +35,18 @@ const DeployAnywhere: React.FC = () => (
           </div>
           <h3 className="font-bold text-xl text-white mb-3">Self-hosted Web Interface</h3>
           <p className="text-accent1 mb-6">Launch your GPT on a standalone link—fully hosted by us. Perfect for sharing with clients or embedding in emails.</p>
-          <Button
-            className="bg-accent1 text-[#232946] font-bold hover:bg-accent1/90 px-10 py-6 text-2xl rounded-full shadow-lg"
-          >
-            Open Demo
-          </Button>
+          <a
+  href="https://intellisyncsolutions.io/chat/pNXqEuc4jTU3Y07ylF5I"
+  target="_blank"
+  rel="noopener noreferrer"
+  style={{ display: 'inline-block' }}
+>
+  <Button
+    className="bg-accent1 text-[#232946] font-bold hover:bg-accent1/90 px-10 py-6 text-2xl rounded-full shadow-lg"
+  >
+    Open Demo
+  </Button>
+</a>
         </motion.div>
         
         <motion.div
@@ -51,11 +62,13 @@ const DeployAnywhere: React.FC = () => (
           <p className="text-accent1 mb-6">Embed your GPT directly on your website with a simple script tag. Seamless integration with your existing web presence.</p>
           <Button
             className="bg-accent1 text-[#232946] font-bold hover:bg-accent1/90 px-10 py-6 text-2xl rounded-full shadow-lg"
+            onClick={() => setModalOpen(true)}
           >
             View Code
           </Button>
+          <GPTEmbedModal open={modalOpen} onClose={() => setModalOpen(false)} />
         </motion.div>
-      </div>
+      </div> 
       
       <motion.div
         className="mt-8 bg-accent1/20 rounded-xl px-6 py-4 flex flex-col items-center"
@@ -67,7 +80,8 @@ const DeployAnywhere: React.FC = () => (
         <span className="text-white">Both options include detailed analytics and user session tracking.</span>
       </motion.div>
     </div>
-  </section>
-);
+      </section>
+  );
+};
 
 export default DeployAnywhere;
