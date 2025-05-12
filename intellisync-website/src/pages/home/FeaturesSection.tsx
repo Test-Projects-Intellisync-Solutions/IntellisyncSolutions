@@ -1,4 +1,4 @@
-import React from "react";
+
 import { Brain, Settings, Server, Users } from "lucide-react";
 import { motion } from "framer-motion";
 

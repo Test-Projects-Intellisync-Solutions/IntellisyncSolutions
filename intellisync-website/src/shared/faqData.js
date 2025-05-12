@@ -19,6 +19,14 @@ export const faqSections = [
                 answer: 'NO! AI replaces repetitive tasks, not people. People that know how to use AI will replace those that don\'t.'
               },
               {
+                question: 'What is the difference between a chatbot and an AI agent?',
+                answer: 'A chatbot is a pre-programmed system that can answer questions or perform tasks based on a set of rules. An AI agent, on the other hand, can learn from data and improve its performance over time.'
+              },
+              {
+                question: 'What is the difference between a chatbot and an AI assistant?',
+                answer: 'A chatbot is a pre-programmed system that can answer questions or perform tasks based on a set of rules. An AI assistant, on the other hand, can learn from data and improve its performance over time.'
+              },
+              {
                 question: 'How does AI “learn” from data?',
                 answer: 'During training, an algorithm looks at thousands or millions of examples, tweaks its internal parameters, and gradually improves its predictions—much like practising until you get better at a skill.'
               },
@@ -50,6 +58,10 @@ export const faqSections = [
             {
                 question: 'What does AI mean?',
                 answer: 'AI stands for Artificial Intelligence—software that can learn and perform tasks typically requiring human intelligence.'
+            },
+            {
+                question: 'What does GPT mean?',
+                answer: 'GPT stands for Generative Pre-trained Transformer—a type of AI model that can generate human-like text based on a given input.'
             },
             {
                 question: 'What does AGI mean?',

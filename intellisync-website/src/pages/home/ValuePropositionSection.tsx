@@ -1,11 +1,11 @@
-import React from "react";
-import { ShieldCheck, Sparkles, Layers, Zap, BarChart3 } from "lucide-react";
+import { ShieldCheck, Sparkles, Layers, Zap} from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function ValuePropositionSection() {
   return (
     <section className="w-full py-20 px-4 md:px-0 bg-gradient-to-br from-[#090d1f] via-[#1a1a2e] to-[#232946]">
       <div className="max-w-5xl mx-auto flex flex-col items-center text-center gap-12">
+       
         {/* Main Content */}
         <div className="w-full flex flex-col items-center md:items-start text-center md:text-left">
         <motion.h2
@@ -14,7 +14,7 @@ export default function ValuePropositionSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: 'easeOut' }}
         >
-         Intellisync Solutions Your Ultimate AI Partner
+          Your Ultimate AI Partner
         </motion.h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-full mb-8 mt-2">
           {/* Innovation & Customization */}
@@ -25,6 +25,7 @@ export default function ValuePropositionSection() {
               <p className="text-accent1">We deliver custom AI systems, meticulously tailored to your needs—no one-size-fits-all solutions here.</p>
             </div>
           </div>
+
           {/* End-to-End Solutions */}
           <div className="flex items-start gap-4">
             <Layers className="w-8 h-8 text-cta" />
@@ -33,14 +34,7 @@ export default function ValuePropositionSection() {
               <p className="text-accent1">From training cutting-edge AI models to integrating them with your digital world, we handle every step—seamlessly.</p>
             </div>
           </div>
-          {/* Proven Expertise */}
-          <div className="flex items-start gap-4">
-            <BarChart3 className="w-8 h-8 text-cta" />
-            <div className="text-left">
-              <h3 className="font-bold text-xl text-white">Proven Expertise</h3>
-              <p className="text-accent1">With over 500 successful AI deployments and trusted by industry leaders, our experience speaks for itself.</p>
-            </div>
-          </div>
+          
           {/* Seamless Integration */}
           <div className="flex items-start gap-4">
             <Zap className="w-8 h-8 text-cta" />
@@ -49,6 +43,7 @@ export default function ValuePropositionSection() {
               <p className="text-accent1">Our AI systems work effortlessly with your existing digital infrastructure, automating tasks and boosting efficiency in real time.</p>
             </div>
           </div>
+
           {/* Trust & Reliability */}
           <div className="flex items-start gap-4">
             <ShieldCheck className="w-8 h-8 text-cta" />
@@ -58,13 +53,9 @@ export default function ValuePropositionSection() {
             </div>
           </div>
         </div>
-        
-          <div className="bg-accent1/20 rounded-xl px-6 py-4 flex flex-col items-center">
-            <span className="text-3xl font-extrabold text-accent1">Industry Leaders</span>
-            <span className="text-white">Trust Intellisync</span>
-          </div>
-        </div>
-        </div>
+      </div>
+    </div>
+
         {/* Bottom Image */}
         <div className="w-full flex justify-center mt-12">
           <img 

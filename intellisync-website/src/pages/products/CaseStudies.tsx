@@ -3,22 +3,22 @@ import { ArrowRight } from "lucide-react";
 
 const CASE_STUDIES = [
   {
-    title: "AI-Powered Operations for FinTech",
-    desc: "Deployed a custom AI solution that increased operational efficiency by 30% and reduced manual workload by 2,000+ hours annually.",
-    link: "/case-studies/fintech",
-    image: "/images/case-study-fintech.jpg"
+    title: "AI-Powered Legal Support Platform",
+    desc: "Deployed a custom AI legal platform that increased operational efficiency by 30% and reduced manual workload by 1,000+ hours annually.",
+    link: "/case-studies/ai-powered-legal-support-platform",
+    image: "/images/case-study-legal.jpg"
   },
   {
-    title: "Personal Productivity AI",
-    desc: "Helped individuals automate scheduling and reminders, improving daily productivity and reducing missed tasks by 40%.",
-    link: "/case-studies/personal-productivity",
-    image: "/images/case-study-productivity.jpg"
+    title: "AI-Powered Financial Support Platform",
+    desc: "Our custom AI financial platform for SME's and individuals. Designed to provide real-time business insights and recommendations for financial planning and management.",
+    link: "/case-studies/ai-powered-financial-support-platform",
+    image: "/images/case-study-financial.jpg"
   },
   {
-    title: "Enterprise Automation at Scale",
-    desc: "Integrated AI-driven automation for a global enterprise, resulting in 500+ successful deployments and measurable ROI.",
-    link: "/case-studies/enterprise-automation",
-    image: "/images/case-study-enterprise.jpg"
+    title: "EducationOne",
+    desc: "EducationOne is a custom AI-powered education platform that helps students and educators engage differently in the classroom and beyond.",
+    link: "/case-studies/educationone",
+    image: "/images/case-study-educationone.jpg"
   },
 ];
 
@@ -60,12 +60,12 @@ export default function CaseStudies() {
             />
           </div>
           <div className="absolute inset-0 bg-gradient-to-t from-[#090d1f]/40 to-transparent flex flex-col justify-end p-8">
-            <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">Success Story: Financial Services Transformation</h3>
+            <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">Success Story: Mnemosys</h3>
             <p className="text-accent1 text-lg mb-4 max-w-2xl">
-              How we helped a leading financial institution reduce operational costs by 45% while improving customer satisfaction scores by 28%
+              How we helped a leading Law firm improve their legal workflow from onboarding to case management.
             </p>
             <a
-              href="/case-studies/financial-services"
+              href="/case-studies/mnemosys"
               className="inline-flex items-center gap-1 text-cta hover:text-accent1 font-semibold transition-colors group w-fit"
             >
               Read Full Case Study <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

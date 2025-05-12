@@ -9,8 +9,8 @@ const B2C_FEATURES = [
   },
   {
     icon: Settings,
-    title: "Life Automation & Smart Routines",
-    desc: "From lights and playlists to water reminders—our AI syncs your devices and calendar to create seamless, supportive daily flows.",
+    title: "Goal-Oriented AI Workflows",
+    desc: "Whether you're planning a personal project, managing your schedule, or developing new habits—our AI helps break down tasks and drive consistent progress with adaptive nudges and structured guidance.",
   },
   {
     icon: Users,
@@ -78,7 +78,7 @@ export default function AIDrivenSolutions() {
           >
             <div className="aspect-w-16 aspect-h-9 w-full">
               <img 
-                src="/assets/images/BtoC.png" 
+                src="/assets/images/BtoB.png" 
                 alt="AI-Driven Solutions" 
                 className="object-cover rounded-2xl w-full h-full"
               />
@@ -140,7 +140,7 @@ export default function AIDrivenSolutions() {
           >
             <div className="aspect-w-16 aspect-h-9 w-full">
               <img 
-                src="/assets/images/BtoB.png" 
+                src="/assets/images/BtoC.png" 
                 alt="Enterprise AI Solutions" 
                 className="object-cover rounded-2xl w-full h-full"
               />

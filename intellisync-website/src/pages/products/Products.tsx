@@ -12,9 +12,9 @@ const CURRENT_PROJECTS = [
   },
   {
     icon: Code,
-    name: "Custom Integrations",
-    desc: "Seamless integration of AI with your existing digital infrastructure and tools.",
-    image: "/assets/images/integrations.png",
+    name: "PersonalOne",
+    desc: "Seamless integration of our advanaced AI Financial engine design for Canadians.",
+    image: "/assets/images/PersonalOne.png",
   },
 ];
 
@@ -27,9 +27,9 @@ const INPROGRESS_PROJECTS = [
   },
   {
     icon: Clock,
-    name: "Financial Insights Engine",
-    desc: "Next-gen financial data analysis and reporting, currently in development.",
-    image: "/assets/images/finance-engine.png",
+    name: "BusinessOne",
+    desc: "Next-gen business engine design for Canadian businesses, currently in development.",
+    image: "/assets/images/BusinessOne.png",
   },
 ];
 
