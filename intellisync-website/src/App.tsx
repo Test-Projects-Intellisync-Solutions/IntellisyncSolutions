@@ -1,6 +1,7 @@
 import Home from "./pages/home/Home";
 import About from "./pages/about/About";
 import GPTBuilder from './pages/GPTBuilder';
+import Pricing from './pages/Pricing/PricingPage';
 
 import PromotionsPage from './pages/promotions/PromotionsPage';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -16,7 +17,6 @@ import MnemosysCaseStudyPage from "./pages/products/mnemosys-case-study";
 
 
 
-const Pricing = () => <div className="min-h-screen flex items-center justify-center text-3xl text-accent1">Pricing Page Coming Soon</div>;
 
 import { streamModelResponse } from "./lib/streamModelResponse";
 import { useLocation } from "react-router-dom";
