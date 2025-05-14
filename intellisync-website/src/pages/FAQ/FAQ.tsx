@@ -5,15 +5,45 @@ import { motion } from 'framer-motion';
 import { faqSections } from './FAQcontent';
 import FAQTabs from './FAQTabs';
 import FAQAccordion from './FAQAccordion';
+import SEO from '../../components/SEO';
+import { getFAQSchema, getBreadcrumbSchema } from '../../utils/structuredData';
 
 const gradientBg = 'bg-gradient-to-br from-[#090d1f] via-[#1a1a2e] to-[#232946]';
 
 const FAQ: React.FC = () => {
   const [activeTab, setActiveTab] = useState(0);
   const section = faqSections[activeTab];
+  
+  // Create FAQ structured data from all FAQ sections
+  const allFaqs = faqSections.flatMap((section: { faqs: Array<{ question: string, answer: string }> }) => 
+    section.faqs.map((faq: { question: string, answer: string }) => ({
+      question: faq.question,
+      answer: faq.answer
+    }))
+  );
+  
+  // Create FAQ schema
+  const faqSchema = getFAQSchema(allFaqs);
+  
+  // Create breadcrumb schema
+  const breadcrumbSchema = getBreadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'FAQ', url: '/faq' }
+  ]);
+  
+  // Combine both schemas for structured data
+  const structuredData = [faqSchema, breadcrumbSchema];
 
   return (
     <>
+    <SEO
+      title="Frequently Asked Questions"
+      description="Find answers to common questions about AI, machine learning, and Intellisync Solutions' services and products."
+      canonicalUrl="/faq"
+      keywords="FAQ, AI questions, machine learning FAQ, Intellisync Solutions help, AI terminology"
+      structuredData={structuredData}
+    />
+    
     <Header />
     <section className={`relative min-h-screen py-16 px-4 ${gradientBg} text-white overflow-hidden`}>
   {/* Glassmorphic overlays for depth */}
@@ -31,7 +61,7 @@ const FAQ: React.FC = () => {
   </motion.h1>
   <div className="max-w-3xl mx-auto z-10 relative">
     <FAQTabs
-      sections={faqSections.map(s => s.section)}
+      sections={faqSections.map((s: { section: string }) => s.section)}
       activeTab={activeTab}
       setActiveTab={setActiveTab}
     />

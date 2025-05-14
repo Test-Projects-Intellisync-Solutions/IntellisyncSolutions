@@ -1,0 +1,6 @@
+# robots.txt for home.intellisyncsolutions.io
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://home.intellisyncsolutions.io/sitemap.xml
