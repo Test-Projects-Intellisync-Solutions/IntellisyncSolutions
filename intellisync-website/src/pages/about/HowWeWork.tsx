@@ -32,7 +32,7 @@ export default function HowWeWork() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: 'easeOut' }}
         >
-          How We Work
+          Our Tech Stack
         </motion.h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mt-8">
           {PROCESS.map((step, idx) => (

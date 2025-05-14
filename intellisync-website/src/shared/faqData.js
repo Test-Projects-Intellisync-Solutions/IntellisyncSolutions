@@ -1,4 +1,73 @@
 export const faqSections = [
+  {
+    section: 'Acronyms',
+    faqs: [
+        {
+            question: 'What does AI mean?',
+            answer: 'AI stands for Artificial Intelligence—software that can learn and perform tasks typically requiring human intelligence.'
+        },
+        {
+          question: 'What does AGI mean?',
+          answer: 'AGI stands for Artificial "General" Intelligence—software that can perform any intellectual task that a human can.'
+      },
+        {
+            question: 'What does GPT mean?',
+            answer: 'GPT stands for Generative Pre-trained Transformer—a type of AI model that can generate human-like text based on a given input.'
+        },
+        {
+            question: 'What does ML mean?',
+            answer: 'ML stands for Machine Learning, a subset of AI where models learn patterns from data to make predictions or decisions.'
+        },
+        {
+            question: 'What does NLP mean?',
+            answer: 'NLP stands for Natural Language Processing, the branch of AI focused on understanding and generating human language.'
+        },
+        {
+            question: 'What does LLM mean?',
+            answer: 'LLM stands for Large Language Model—a very large neural network trained on vast text data to generate human‑like language (e.g., chatbots).'
+        },
+        {
+            question: 'What does API mean?',
+            answer: 'API stands for Application Programming Interface—a set of rules that lets different software applications communicate with each other.'
+        },
+        {
+            question: 'What does MCP mean?',
+            answer: 'MCP stands for Model Context Protocol—Intellisync’s framework. It allows your A.I. to access custom private tools, resources, memory, and data.'
+        },
+        {
+            question: 'What is VPC?',
+            answer: 'VPC stands for Virtual Private Cloud. It is a private cloud environment that is isolated from the public internet.'
+        },
+        {
+            question: 'What does RAG mean?',
+            answer: 'RAG stands for Retrieval‑Augmented Generation—an AI technique that first fetches relevant documents then uses them to craft accurate answers.'
+        },
+        {
+            question: 'What is a DB?',
+            answer: 'A DB stands for Database—a collection of data stored in a structured format.'
+        },
+        {
+            question: 'What is a VPS?',
+            answer: 'A VPS stands for Virtual Private Server—a virtual machine that runs on a physical server.'
+        },
+        {
+            question: 'What is a VDB?',
+            answer: 'A VDB stands for Vector Database—a database that stores data in a vector format that allows AI to understand the relationships between data points.'
+        },
+        {
+            question: 'What does GPU mean?',
+            answer: 'GPU stands for Graphics Processing Unit—a specialized chip that accelerates AI model training and inference.'
+        },
+        {
+            question: 'What does UI mean?',
+            answer: 'UI stands for User Interface—the part of a program or device that you interact with.'
+        },
+        {
+            question: 'What does UX mean?',
+            answer: 'UX stands for User Experience—the overall experience of using a product or service.'
+        }
+    ]
+},
         {
             section: 'General',
             faqs: [
@@ -49,133 +118,61 @@ export const faqSections = [
               {
                 question: 'Is my data safe when using cloud AI services?',
                 answer: 'Look for providers that encrypt data in transit and at rest, follow SOC-2 or ISO standards, and give you control over data retention.'
+              },
+              {
+                question: 'What is fine-tuning models with proprietary data?',
+                answer: 'Fine-tuning with proprietary data can boost relevance and accuracy. The process often involves converting your documents into training data, vectorizing them, and producing a private model checkpoint. Always confirm data privacy and intellectual property protections.'
               }
             ]
           },
-    {
-        section: 'Acronyms',
-        faqs: [
-            {
-                question: 'What does AI mean?',
-                answer: 'AI stands for Artificial Intelligence—software that can learn and perform tasks typically requiring human intelligence.'
-            },
-            {
-                question: 'What does GPT mean?',
-                answer: 'GPT stands for Generative Pre-trained Transformer—a type of AI model that can generate human-like text based on a given input.'
-            },
-            {
-                question: 'What does AGI mean?',
-                answer: 'AGI stands for Artificial "General" Intelligence—software that can perform any intellectual task that a human can.'
-            },
-            {
-                question: 'What does ML mean?',
-                answer: 'ML stands for Machine Learning, a subset of AI where models learn patterns from data to make predictions or decisions.'
-            },
-            {
-                question: 'What does NLP mean?',
-                answer: 'NLP stands for Natural Language Processing, the branch of AI focused on understanding and generating human language.'
-            },
-            {
-                question: 'What does LLM mean?',
-                answer: 'LLM stands for Large Language Model—a very large neural network trained on vast text data to generate human‑like language (e.g., chatbots).'
-            },
-            {
-                question: 'What does API mean?',
-                answer: 'API stands for Application Programming Interface—a set of rules that lets different software applications communicate with each other.'
-            },
-            {
-                question: 'What does MCP mean?',
-                answer: 'MCP stands for Model Context Protocol—Intellisync’s framework. It allows your A.I. to access custom private tools, resources, memory, and data.'
-            },
-            {
-                question: 'What is VPC?',
-                answer: 'VPC stands for Virtual Private Cloud. It is a private cloud environment that is isolated from the public internet.'
-            },
-            {
-                question: 'What does RAG mean?',
-                answer: 'RAG stands for Retrieval‑Augmented Generation—an AI technique that first fetches relevant documents then uses them to craft accurate answers.'
-            },
-            {
-                question: 'What is a DB?',
-                answer: 'A DB stands for Database—a collection of data stored in a structured format.'
-            },
-            {
-                question: 'What is a VPS?',
-                answer: 'A VPS stands for Virtual Private Server—a virtual machine that runs on a physical server.'
-            },
-            {
-                question: 'What is a VDB?',
-                answer: 'A VDB stands for Vector Database—a database that stores data in a vector format that allows AI to understand the relationships between data points.'
-            },
-            {
-                question: 'What does GPU mean?',
-                answer: 'GPU stands for Graphics Processing Unit—a specialized chip that accelerates AI model training and inference.'
-            },
-            {
-                question: 'What does UI mean?',
-                answer: 'UI stands for User Interface—the part of a program or device that you interact with.'
-            },
-            {
-                question: 'What does UX mean?',
-                answer: 'UX stands for User Experience—the overall experience of using a product or service.'
-            }
-        ]
-    },
     {
         section: 'Technical',
         faqs: [
             {
                 question: 'Is my data secure?',
-                answer: 'Yes. Data is encrypted in transit (TLS 1.3) and at rest (AES-256). We isolate each tenant in its own namespace, run daily vulnerability scans, and undergo annual third-party penetration testing.'
+                answer: 'Yes, data security should always be a top priority. Look for platforms that encrypt data in transit (e.g., TLS 1.3) and at rest (e.g., AES-256). It’s also important to verify whether vendors offer multi-tenant isolation, conduct regular vulnerability scans, and engage in third-party penetration testing. These practices help minimize risks and protect sensitive information in modern AI deployments.'
               },
-              {
+            {
                 question: 'Do you offer API access?',
-                answer: 'Absolutely. Every paid tier includes REST and Web-hook endpoints, OAuth 2.0 auth, and detailed usage analytics. See the Pricing page for call quotas and SLA levels.'
-              },
-              {
-                question: 'Do you offer a free trial?',
-                answer: 'Yes—14 days, no credit card. You get full dashboard access, 1 GB of vector storage, and 1 000 API calls to test your use-case before upgrading.'
+                answer: 'API access is a key feature for extending functionality and automating workflows. Look for platforms that support REST or GraphQL endpoints, offer webhooks for real-time data events, and use industry-standard authentication protocols like OAuth 2.0. Analytics and usage dashboards are also useful for tracking performance and managing quotas.'
               },
               {
                 question: 'Can you deploy on-premises instead of the cloud?',
-                answer: 'Definitely. For strict data-residency needs, we install a private MCP cluster inside your VPC or on physical hardware, with air-gap options and your own encryption keys.'
+                answer: 'Yes—on-premises deployment is common for organizations with strict data-residency or regulatory requirements. Look for vendors that support containerized or virtualized installations within your VPC or private data center. Air-gapped options and customer-managed encryption keys add further control.'
               },
               {
                 question: 'Do you offer private MCP servers for enterprises?',
-                answer: 'Yes. Enterprise customers get isolated MCP instances with SSO, SCIM-based user provisioning, and custom scaling policies. Personal users can also run a single-node MCP on our cloud tier.'
+                answer: 'Enterprises often need isolated environments for compliance, performance, or internal policy reasons. A private AI server—or dedicated instance—can provide single sign-on (SSO), custom scaling, and advanced provisioning. This architecture supports enterprise-grade governance and integration needs.'
               },
               {
                 question: 'Do you offer custom AI model fine-tuning?',
-                answer: 'Yes. Bring domain-specific data, and our ML team fine-tunes a base LLM for higher accuracy. Your fine-tuned weights remain 100 % your IP.'
+                answer: 'Yes—fine-tuning involves training a base model on domain-specific data to improve accuracy and relevance. When working with a provider, make sure your data remains confidential and that any fine-tuned model outputs are restricted to your account or deployment.'
               },
               {
-                question: 'What compliance standards do you meet?',
-                answer: 'We’re SOC 2 Type II audited. For healthcare or EU customers, we’ll sign HIPAA BAAs or GDPR DPA addenda and run workloads in region-locked data centres.'
+                question: 'What compliance standards do I need to meet?',
+                answer: 'Trustworthy AI providers follow industry compliance frameworks like SOC 2 Type II, ISO 27001, or HIPAA. For international customers, GDPR and regional data residency agreements are critical. Always ask about certifications and third-party audits.'
               },
               {
-                question: 'How is my data stored and retained?',
-                answer: 'Production data lives in encrypted Postgres + object storage. Raw logs rotate after 30 days; anonymised analytics persist for 12 months unless you opt out.'
+                question: 'How is data stored and retained?',
+                answer: 'Data is typically stored in encrypted databases and object storage systems. Raw logs may be retained for debugging purposes but are often deleted after 30–90 days. Look for clear data retention policies and opt-out options for long-term analytics.'
               },
               {
-                question: 'What is your uptime SLA?',
-                answer: 'Paid plans come with a 99.9 % monthly uptime SLA. Our infra runs on multi-AZ clusters with automated fail-over and 24/7 pager rotation.'
+                question: 'What is an uptime SLA?',
+                answer: 'A good uptime SLA (Service Level Agreement) provides transparency and guarantees around platform availability. Common tiers include 99.9% or 99.99% uptime. High-reliability systems use multi-zone redundancy, automated failover, and 24/7 monitoring.'
               },
               {
                 question: 'How do model updates work?',
-                answer: 'Our MCP layer hot-swaps model versions. You can pin a model, auto-upgrade on minor releases, or schedule updates during a maintenance window.'
+                answer: 'AI platforms regularly release model updates to improve accuracy and reduce bias. Look for options to schedule updates, pin a preferred model version, or enable auto-upgrades during off-peak hours.'
               },
               {
                 question: 'Can I integrate with third-party tools?',
-                answer: 'Yes—native connectors for Slack, Stripe, HubSpot, and Zapier, plus generic web-hooks and a GraphQL proxy if you need finer control.'
+                answer: 'Most platforms support third-party integration through APIs, SDKs, or native connectors. Tools like Slack, Stripe, Zapier, and HubSpot are common targets. If flexibility is key, look for webhook support and a GraphQL or REST interface.'
               },
               {
                 question: 'Is there a rate limit on the API?',
-                answer: 'Free tier = 1 000 calls/day; Pro = 50 k; Scale = 1 M. Enterprise tiers negotiate custom ceilings with burst-protection.'
+                answer: 'Yes—API rate limits help manage system load and ensure fairness. Free plans usually allow limited daily calls, while higher tiers support higher volume and burst capacity. Enterprise agreements may include negotiated ceilings.'
               },
-              {
-                question: 'Do you fine-tune models with proprietary data?',
-                answer: 'Yes. Upload CSVs, PDFs, or database dumps; we’ll vectorise, fine-tune, and deliver a model checkpoint that only your account can access.'
-              }
+             
         ]
     },
     {
@@ -204,10 +201,6 @@ export const faqSections = [
               {
                 question: 'How long does it take to get started?',
                 answer: 'Typical timeline: **Kick-off Day 0**, data audit **Day 3**, working prototype **Day 10**, full launch **Day 20–30**. Smaller personal agents can go live in under 30 minutes using our GPT Builder.'
-              },
-              {
-                question: 'Can I cancel at any time?',
-                answer: 'Yes. All cloud services are month-to-month. Hit “Cancel,” and you won’t be billed for the next cycle—no retention gimmicks or surprise fees. Custom solutions are negotiated on a case-by-case basis.'
               },
               {
                 question: 'What are your support hours?',

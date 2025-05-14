@@ -65,7 +65,7 @@ export default function CaseStudies() {
               How we helped a leading Law firm improve their legal workflow from onboarding to case management.
             </p>
             <a
-              href="/case-studies/mnemosys"
+              href="/products/mnemosys-case-study"
               className="inline-flex items-center gap-1 text-cta hover:text-accent1 font-semibold transition-colors group w-fit"
             >
               Read Full Case Study <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

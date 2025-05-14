@@ -12,6 +12,7 @@ import TermsPage from "./pages/terms";
 import WaitlistPage from "./pages/waitlist";
 import FAQ from "./pages/FAQ/FAQ";
 import ScrollToTop from './components/ScrollToTop';
+import MnemosysCaseStudyPage from "./pages/products/mnemosys-case-study";
 
 
 
@@ -65,6 +66,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/products" element={<ProductsPage />} />
+          <Route path="/products/mnemosys-case-study" element={<MnemosysCaseStudyPage />} />
           <Route path="/promotions" element={<PromotionsPage />} />
           <Route path="/gptbuilder" element={<GPTBuilder />} />
           <Route path="/pricing" element={<Pricing />} />
