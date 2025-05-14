@@ -78,7 +78,7 @@ export default function AIDrivenSolutions() {
           >
             <div className="aspect-w-16 aspect-h-9 w-full">
               <img 
-                src="/assets/images/BtoB.png" 
+                src="/assets/images/BtoC.png" 
                 alt="AI-Driven Solutions" 
                 className="object-cover rounded-2xl w-full h-full"
               />
@@ -140,7 +140,7 @@ export default function AIDrivenSolutions() {
           >
             <div className="aspect-w-16 aspect-h-9 w-full">
               <img 
-                src="/assets/images/BtoC.png" 
+                src="/assets/images/BtoB.png" 
                 alt="Enterprise AI Solutions" 
                 className="object-cover rounded-2xl w-full h-full"
               />

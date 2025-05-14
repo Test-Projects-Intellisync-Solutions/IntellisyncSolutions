@@ -45,6 +45,17 @@ export default function Products() {
         >
           Our Products & Services
         </motion.h1>
+
+        {/* Test - might remove*/}
+        <motion.p
+          className="text-lg md:text-xl text-accent1 max-w-2xl mx-auto mb-12 text-center"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, ease: 'easeOut', delay: 0.1 }}
+        >
+          Our products and services are designed to help you achieve your goals with the power of AI. Whether you're looking to automate your workflows, improve your customer experience, or gain deeper insights into your data, we have the tools you need to succeed.
+        </motion.p>
+        
         {/* Current Projects */}
         <div className="mb-20">
           <motion.h2
@@ -79,6 +90,7 @@ export default function Products() {
             ))}
           </div>
         </div>
+
         {/* In Progress Projects */}
         <div>
           <motion.h2
