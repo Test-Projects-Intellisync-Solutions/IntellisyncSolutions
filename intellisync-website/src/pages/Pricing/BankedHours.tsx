@@ -78,10 +78,15 @@ const BankedHours = () => (
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.7 }}
     >
-      {bankedHours.rates.map((item, idx) => (
-        <li key={idx}><span className="font-semibold text-cta">{item.type}</span>: <span className="text-accent1 font-bold">${item.rate}/hr</span></li>
-      ))}
+      {bankedHours.rates
+        .filter(item => item.type === 'Included work')
+        .map((item, idx) => (
+          <li key={idx}><span className="font-semibold text-cta">{item.type}</span>: <span className="text-accent1 font-bold">${item.rate}/hr</span></li>
+        ))}
     </motion.ul>
+    <div className="text-xs text-gray-400 mt-2">
+      <span className="font-semibold">Note:</span> Banked Hours are only available to After Care Plan clients.
+    </div>
   </motion.section>
 );
 

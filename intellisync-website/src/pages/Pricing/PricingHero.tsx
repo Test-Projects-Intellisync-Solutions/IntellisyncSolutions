@@ -31,7 +31,7 @@ const PricingHero = () => (
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2, duration: 0.7, ease: 'easeOut' }}
       >
-        Our After Care Plans are designed for businesses that value ongoing support, stability, and future-readiness. Choose a plan that meets your needs today and scales with your vision tomorrow.
+        Our After Care Plans are designed for businesses and individuals that value ongoing support, stability, and future-readiness. Choose a plan that meets your needs today and scales with your vision tomorrow.
       </motion.p>
     </div>
   </section>
