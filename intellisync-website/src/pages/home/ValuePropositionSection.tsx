@@ -1,5 +1,6 @@
 import { ShieldCheck, Sparkles, Layers, Zap} from "lucide-react";
 import { motion } from "framer-motion";
+import "./inner-glow.css";
 
 export default function ValuePropositionSection() {
   return (
@@ -56,15 +57,147 @@ export default function ValuePropositionSection() {
       </div>
     </div>
 
-        {/* Bottom Image */}
-        <div className="w-full flex justify-center mt-12">
+        {/* Hub and Spoke Animated Image Layout */}
+        <div className="relative flex justify-center items-center min-h-[420px] mt-12">
+
+            {/* Spoke 1 */}
+            <motion.line
+              x1="200" y1="200" x2="104" y2="104"
+              stroke="#7B61FF" strokeWidth="4" strokeLinecap="round"
+              initial={{ opacity: 0.3 }}
+              animate={{ opacity: [0.3, 1, 0.3] }}
+              transition={{ duration: 5, repeat: Infinity }}
+              filter="url(#glow)"
+            />
+            <motion.line
+              x1="200" y1="200" x2="344" y2="104"
+              stroke="#7B61FF" strokeWidth="4" strokeLinecap="round"
+              initial={{ opacity: 0.3 }}
+              animate={{ opacity: [0.3, 1, 0.3] }}
+              transition={{ duration: 5, repeat: Infinity, delay: 0.2 }}
+              filter="url(#glow)"
+            />
+            <motion.line
+              x1="200" y1="200" x2="164" y2="364"
+              stroke="#7B61FF" strokeWidth="4" strokeLinecap="round"
+              initial={{ opacity: 0.3 }}
+              animate={{ opacity: [0.3, 1, 0.3] }}
+              transition={{ duration: 5, repeat: Infinity, delay: 0.4 }}
+              filter="url(#glow)"
+            />
+            <motion.line
+              x1="200" y1="200" x2="304" y2="364"
+              stroke="#7B61FF" strokeWidth="4" strokeLinecap="round"
+              initial={{ opacity: 0.3 }}
+              animate={{ opacity: [0.3, 1, 0.3] }}
+              transition={{ duration: 5, repeat: Infinity, delay: 0.6 }}
+              filter="url(#glow)"
+            />
+            <motion.line
+              x1="200" y1="200" x2="184" y2="144"
+              stroke="#7B61FF" strokeWidth="4" strokeLinecap="round"
+              initial={{ opacity: 0.3 }}
+              animate={{ opacity: [0.3, 1, 0.3] }}
+              transition={{ duration: 5, repeat: Infinity, delay: 0.8 }}
+              filter="url(#glow)"
+            />
+            {/* Spoke 2 */}
+            <motion.line
+              x1="200" y1="200" x2="280" y2="40"
+              stroke="#7B61FF" strokeWidth="4" strokeLinecap="round"
+              initial={{ opacity: 0.3 }}
+              animate={{ opacity: [0.3, 1, 0.3] }}
+              transition={{ duration: 5, repeat: Infinity, delay: 0.3 }}
+              filter="url(#glow)"
+            />
+            {/* Spoke 3 */}
+            <motion.line
+              x1="200" y1="200" x2="100" y2="300"
+              stroke="#7B61FF" strokeWidth="4" strokeLinecap="round"
+              initial={{ opacity: 0.3 }}
+              animate={{ opacity: [0.3, 1, 0.3] }}
+              transition={{ duration: 5, repeat: Infinity, delay: 0.6 }}
+              filter="url(#glow)"
+            />
+            {/* Spoke 4 */}
+            <motion.line
+              x1="200" y1="200" x2="240" y2="300"
+              stroke="#7B61FF" strokeWidth="4" strokeLinecap="round"
+              initial={{ opacity: 0.3 }}
+              animate={{ opacity: [0.3, 1, 0.3] }}
+              transition={{ duration: 5, repeat: Infinity, delay: 0.9 }}
+              filter="url(#glow)"
+            />
+            {/* Spoke 5 */}
+            <motion.line
+              x1="200" y1="200" x2="120" y2="80"
+              stroke="#7B61FF" strokeWidth="4" strokeLinecap="round"
+              initial={{ opacity: 0.3 }}
+              animate={{ opacity: [0.3, 1, 0.3] }}
+              transition={{ duration: 5, repeat: Infinity, delay: 1.2 }}
+              filter="url(#glow)"
+            />
+
+          {/* Central Image */}
           <img 
             src="/assets/images/Value.png" 
             alt="Value Proposition Illustration" 
-            className="max-w-xs md:max-w-sm lg:max-w-md rounded-lg shadow-xl object-contain"
+            className="z-10 max-w-xs md:max-w-sm lg:max-w-md rounded-lg shadow-xl object-contain"
+            style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}
+          />
+          {/* Spoke Images */}
+          <motion.img
+            src="/assets/images/spoke1.png"
+            alt="Spoke 1"
+            className="w-32 h-32 object-contain rounded-xl absolute z-20 inner-glow p-2"
+            style={{ left: '10%', top: '10%' }}
+            initial={{ opacity: 0, scale: 0.7 }}
+            animate={{ opacity: 1, scale: [0.9, 1.1, 0.9] }}
+            transition={{ duration: 5, repeat: Infinity }}
+            whileHover={{ scale: 1.15 }}
+          />
+          <motion.img
+            src="/assets/images/spoke2.png"
+            alt="Spoke 2"
+            className="w-32 h-32 object-contain rounded-xl absolute z-20 inner-glow p-2"
+            style={{ left: '70%', top: '10%' }}
+            initial={{ opacity: 0, scale: 0.7 }}
+            animate={{ opacity: 1, scale: [0.9, 1.1, 0.9] }}
+            transition={{ duration: 5, repeat: Infinity, delay: 0.3 }}
+            whileHover={{ scale: 1.15 }}
+          />
+          <motion.img
+            src="/assets/images/spoke3.png"
+            alt="Spoke 3"
+            className="w-32 h-32 object-contain rounded-xl absolute z-20 inner-glow p-2"
+            style={{ left: '25%', top: '75%' }}
+            initial={{ opacity: 0, scale: 0.7 }}
+            animate={{ opacity: 1, scale: [0.9, 1.1, 0.9] }}
+            transition={{ duration: 5, repeat: Infinity, delay: 0.6 }}
+            whileHover={{ scale: 1.15 }}
+          />
+          <motion.img
+            src="/assets/images/spoke4.png"
+            alt="Spoke 4"
+            className="w-32 h-32 object-contain rounded-xl absolute z-20 inner-glow p-2"
+            style={{ left: '60%', top: '75%' }}
+            initial={{ opacity: 0, scale: 0.7 }}
+            animate={{ opacity: 1, scale: [0.9, 1.1, 0.9] }}
+            transition={{ duration: 5, repeat: Infinity, delay: 0.6 }}
+            whileHover={{ scale: 1.15 }}
+          />
+          <motion.img
+            src="/assets/images/spoke5.png"
+            alt="Spoke 5"
+            className="w-32 h-32 object-contain rounded-xl absolute z-20 inner-glow p-2"
+            style={{ left: '30%', top: '20%' }}
+            initial={{ opacity: 0, scale: 0.7 }}
+            animate={{ opacity: 1, scale: [0.9, 1.1, 0.9] }}
+            transition={{ duration: 5, repeat: Infinity, delay: 0.6 }}
+            whileHover={{ scale: 1.15 }}
           />
         </div>
-     
+
     </section>
   );
 }
