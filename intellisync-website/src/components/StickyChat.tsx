@@ -277,10 +277,35 @@ export const StickyChat: React.FC<StickyChatProps> = ({ onSend, eventContext }) 
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  // Track previous message count to detect new messages
+  const prevMessageCountRef = useRef(messages.length);
+
   useEffect(() => {
-    if (open && messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    const messagesContainer = messagesEndRef.current?.parentElement;
+    if (!messagesContainer) return;
+
+    // Only auto-scroll if:
+    // 1. Chat was just opened
+    // 2. A new message was added (and it's from the assistant)
+    const isNewMessage = messages.length > prevMessageCountRef.current;
+    const isAssistantMessage = isNewMessage && messages[messages.length - 1]?.role === 'assistant';
+    
+    if (open) {
+      if (isNewMessage && isAssistantMessage) {
+        // For new assistant messages, scroll to the top of the message
+        const lastMessage = messagesContainer.lastElementChild?.previousElementSibling;
+        if (lastMessage) {
+          lastMessage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      } else if (messages.length === 0 || !isNewMessage) {
+        // For other cases (like opening chat), scroll to bottom
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      }
     }
+    
+    // Update previous message count
+    prevMessageCountRef.current = messages.length;
+    
     // Auto-focus input unless user intentionally blurred
     if (!userBlurred && inputRef.current) {
       inputRef.current.focus();
