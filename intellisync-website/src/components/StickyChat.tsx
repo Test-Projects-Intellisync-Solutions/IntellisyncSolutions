@@ -421,8 +421,8 @@ export const StickyChat: React.FC<StickyChatProps> = ({ onSend, eventContext }) 
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 100, scale: 0.95 }}
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-            className="fixed bottom-6 right-6 z-50 w-full max-w-sm sm:max-w-md rounded-3xl shadow-2xl bg-white/90 dark:bg-zinc-900/90 backdrop-blur-xl border border-border flex flex-col"
-            style={{ height: 480, maxHeight: '80vh' }}
+            className="fixed bottom-6 right-6 z-50 w-full max-w-md sm:max-w-lg lg:max-w-xl rounded-3xl shadow-2xl bg-white/90 dark:bg-zinc-900/90 backdrop-blur-xl border border-border flex flex-col"
+            style={{ height: 600, maxHeight: '85vh' }}
           >
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-border bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-t-3xl">

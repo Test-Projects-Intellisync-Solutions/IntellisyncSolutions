@@ -11,13 +11,9 @@ const buttonVariants = {
 export default function CustomCTA() {
   return (
     <section
-      className="w-full py-24 px-4 md:px-0 bg-gradient-to-br from-[#090d1f] via-[#1a1a2e] to-[#232946] flex items-center justify-center relative overflow-hidden"
+      className="w-full py-24 px-4 md:px-0 bg-gradient-to-br from-[#090d1f] via-[#1a1a2e] to-[#232946] flex items-center justify-center relative"
       aria-label="Call to Action"
     >
-      {/* Glow/gradient background accent */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-cta/30 via-blue-400/20 to-transparent rounded-full blur-3xl opacity-60 animate-pulse" />
-      </div>
       <div className="relative max-w-6xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center z-10">
         {/* Left: Text & Buttons */}
         <div className="flex flex-col gap-8 items-center md:items-start text-center md:text-left">
@@ -68,22 +64,20 @@ export default function CustomCTA() {
             </motion.a>
           </div>
         </div>
-        {/* Right: Image with animated glow */}
+        {/* Right: Image */}
         <motion.div
           className="flex justify-center md:justify-end items-center relative"
           initial={{ opacity: 0, scale: 0.95, x: 60 }}
           whileInView={{ opacity: 1, scale: 1, x: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
         >
-          <div className="relative">
+          <div>
             <img
               src="/assets/images/CTA.png"
               alt="AI Transformation Illustration"
-              className="max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg rounded-3xl shadow-2xl "
+              className="max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg rounded-3xl shadow-2xl"
               loading="lazy"
             />
-            {/* Animated glow behind image */}
-            <div className="absolute -inset-4 md:-inset-8 rounded-3xl bg-gradient-to-tr from-cta/40 via-blue-400/30 to-transparent blur-2xl opacity-70 z-[-1] animate-pulse" />
           </div>
         </motion.div>
       </div>
