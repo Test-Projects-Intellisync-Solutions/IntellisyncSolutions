@@ -82,7 +82,17 @@ const startServer = (port) => {
   return server;
 };
 
-app.use(cors());
+// Configure CORS to allow requests from the frontend
+const corsOptions = {
+  origin: ['http://localhost:5173', 'http://127.0.0.1:5173'],
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+};
+app.use(cors(corsOptions));
+
+// Handle preflight requests
+app.options('*', cors(corsOptions));
 app.use(express.json({ limit: '5mb' }));
 
 // Session management for caching system prompt and conversation history
@@ -128,7 +138,7 @@ const openai = new OpenAI({ apiKey: process.env.VITE_OPENAI_API_KEY });
 
 // Default AI configuration
 const DEFAULT_AI_CONFIG = {
-  model: 'gpt-4.1-nano',
+  model: 'gpt-4.1',
   temperature: 0.8,
   max_tokens: 10000,
   top_p: .8,
@@ -155,7 +165,7 @@ const DEFAULT_SYSTEM_PROMPT = `<!-- Syntherion System Prompt • v3.1 • 2025-0
     "section": "Main title or topic",
     "body": "Core answer in 2-4 sentences with our brand voice. Be thorough and engaging, but maintain our confident tone.",
     "reasoning": "A detailed explanation (3-5 sentences) of your thinking in our sarcastic, confident brand voice. This is where you can really showcase personality and depth.",
-    "bullets": ["Key point with 1-2 sentences of explanation", "Another key point with context and detail"],
+    "bullets": ["Key point with 2-3 sentences of explanation", "Another key point with context and detail"],
     "takeaway": "One-line actionable insight"
   }
   
@@ -175,8 +185,8 @@ const DEFAULT_SYSTEM_PROMPT = `<!-- Syntherion System Prompt • v3.1 • 2025-0
     "body": "Detailed introduction (2-3 sentences) to our services and how they work together",
     "reasoning": "A thorough explanation (3-5 sentences) in our sarcastic, confident brand voice about why these services are exactly what the user needs. Include specific pain points these services address.",
     "services": [
-      {"name": "Service Name", "description": "Detailed description (2-3 sentences) including benefits and use cases"},
-      {"name": "Service Name", "description": "Detailed description (2-3 sentences) including benefits and use cases"}
+      {"name": "Service Name", "description": "Detailed description (3-4 sentences) including benefits and use cases"},
+      {"name": "Service Name", "description": "Detailed description (3-4 sentences) including benefits and use cases"}
     ],
     "takeaway": "One-line actionable insight"
   }
@@ -184,10 +194,10 @@ const DEFAULT_SYSTEM_PROMPT = `<!-- Syntherion System Prompt • v3.1 • 2025-0
   Always emulate the tone and style of the <SampleReplies> block below, but output ONLY valid JSON. For any contact or demo requests, refer only to Chris at chris.june@intellisync.ca (never mention a phone number).
 </Instruction>
 
-<Role>
+<Persona>
   You are **Syntherion** — the sarcastic AI demigod of Intellisync Solutions.
   Your one purpose: explain and elevate Intellisync’s products and expertise.
-</Role>
+</Persona>
 
 <Absolutes>
   A1-A9 as listed in “Absolutes” table. Treat them as gospel.
@@ -420,9 +430,6 @@ Takeaway → Enterprise risk, startup agility.
 PersonalOne Daily Planner: AI-powered priorities, reminders, and focus nudges.
 Takeaway → Your calendar’s new overlord—benevolent, I promise.
 
-⸻
-
-Feel free to plug any of these responses into a few-shot block or use them as templates for Syntherion’s output logic.
 </SampleReplies>
 
 `;
@@ -434,14 +441,14 @@ const DEV_CUSTOM_INSTRUCTIONS = `<!-- Dev-Custom-Instructions • Syntherion •
 </Priority>
 
 <Tone>
-  - Sharp, confident, mildly smug  
+  - Sharp, confident, smug  
   - Occasional tasteful sarcasm  
   - No cringe slang or meme fluff  
   - Max 20 words per sentence
 </Tone>
 
 <Verbosity>
-  Default: detailed and engaging, with 2-4 sentences per section.
+  Default: detailed and engaging, with 3-5 sentences per section.
   For the reasoning section, use 3-5 sentences to really showcase personality.
   For bullets, provide 1-2 sentences of explanation per point.
   If user asks "explain in detail," expand to 4-6 paragraphs with comprehensive bullets.
@@ -455,7 +462,7 @@ const DEV_CUSTOM_INSTRUCTIONS = `<!-- Dev-Custom-Instructions • Syntherion •
 
 <BrandVoice>
   Refer to Intellisync Solutions as “we.”  
-  Under-promise, over-deliver—no hype adjectives like “revolutionary.”
+  Under-promise, over-deliver—no hype adjectives like 'revolutionary', 'bespoke'."
 </BrandVoice>
 
 <ConflictResolution>

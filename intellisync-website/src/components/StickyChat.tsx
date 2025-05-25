@@ -168,52 +168,48 @@ interface ChatModelResponseProps {
   loading?: boolean;
 }
 
+// Helper function to extract content from malformed JSON strings
+const extractContent = (text: string) => {
+  // Try to find and extract the body content
+  const bodyMatch = text.match(/"body":\s*"([^"]+)"/i);
+  if (bodyMatch && bodyMatch[1]) {
+    return {
+      section: 'Response',
+      body: bodyMatch[1],
+      bullets: extractBullets(text),
+      takeaway: text.match(/"takeaway":\s*"([^"]+)"/i)?.[1] || ''
+    };
+  }
+  return null;
+};
+
 export const ChatModelResponse: React.FC<ChatModelResponseProps> = ({ response, visible, loading }) => {
   // Try to parse the response as JSON using our debug utility
   let parsedResponse = null;
   
   if (typeof response === 'string') {
-    // Log the raw response for debugging
-    console.log('ChatModelResponse - Raw response:', response);
-    
-    // First try to parse the raw response
-    parsedResponse = debugJsonParse(response);
-    
-    // If that fails, try with trimming
-    if (!parsedResponse) {
-      const trimmedResponse = response.trim();
-      console.log('ChatModelResponse - Trying with trimmed response');
-      parsedResponse = debugJsonParse(trimmedResponse);
+    // First try to parse as complete JSON
+    try {
+      parsedResponse = JSON.parse(response);
+    } catch (e) {
+      // If that fails, try our debug parser
+      parsedResponse = debugJsonParse(response);
       
-      // If still failing, try more aggressive cleaning
-      if (!parsedResponse && trimmedResponse.startsWith('{') && trimmedResponse.endsWith('}')) {
-        console.log('ChatModelResponse - Trying with aggressive cleaning');
-        const cleanedResponse = trimmedResponse
-          .replace(/^\ufeff/g, '')
-          .replace(/\\n/g, '\n')
-          .replace(/\\r/g, '\r')
-          .replace(/\\t/g, '\t');
-        parsedResponse = debugJsonParse(cleanedResponse);
-      }
-    }
-    
-    // Manual fallback if parsing failed but response looks like JSON
-    if (!parsedResponse && response.includes('"section"')) {
-      console.log('ChatModelResponse - Attempting manual JSON extraction');
-      try {
-        // Try to extract the JSON by finding the first { and last }
-        const firstBrace = response.indexOf('{');
-        const lastBrace = response.lastIndexOf('}');
-        
-        if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
-          const jsonSubstring = response.substring(firstBrace, lastBrace + 1);
-          parsedResponse = debugJsonParse(jsonSubstring);
-        }
-      } catch (e) {
-        console.error('ChatModelResponse - Manual JSON extraction failed:', e);
+      // If debug parser fails, try to extract content from the string
+      if (!parsedResponse) {
+        parsedResponse = extractContent(response);
       }
     }
   }
+
+  // If we still don't have a parsed response, use the raw text
+  const displayContent = parsedResponse ? (
+    <SyntherionResponse data={parsedResponse} />
+  ) : (
+    <div className="p-4 whitespace-pre-line break-words text-base min-h-[1.5em] bg-background/95 dark:bg-zinc-900/95 text-black dark:text-white">
+      {response}
+    </div>
+  );
 
   return (
     <AnimatePresence>
@@ -229,13 +225,7 @@ export const ChatModelResponse: React.FC<ChatModelResponseProps> = ({ response, 
           )}
           style={{ minHeight: 56 }}
         >
-          {parsedResponse ? (
-            <SyntherionResponse data={parsedResponse} />
-          ) : (
-            <div className="p-4 whitespace-pre-line break-words text-base min-h-[1.5em] bg-background/95 dark:bg-zinc-900/95 text-black dark:text-white">
-              {response}
-            </div>
-          )}
+          {displayContent}
         </motion.div>
       )}
     </AnimatePresence>

@@ -7,7 +7,8 @@ export const waitlistApi = {
     try {
       // In a real implementation, this would be an actual API endpoint
       // For now, we'll simulate a successful API call
-      const response = await fetch('/api/waitlist', {
+      const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || '';
+      const response = await fetch(`${apiBaseUrl}/api/waitlist`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

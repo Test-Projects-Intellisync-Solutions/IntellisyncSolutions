@@ -34,7 +34,8 @@ export async function streamModelResponse(userPrompt: string, eventContext?: str
     sessionId = localStorage.getItem('ai-chat-session-id');
   }
 
-  const response = await fetch('/api/ai/stream', {
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || '';
+  const response = await fetch(`${apiBaseUrl}/api/ai/stream`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ 
