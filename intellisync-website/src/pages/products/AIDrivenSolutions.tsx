@@ -4,23 +4,23 @@ import { Brain, Settings, Server, Users } from "lucide-react";
 const B2C_FEATURES = [
   {
     icon: Brain,
-    title: "Personal AI Companions",
-    desc: "Empathetic, memory-aware assistants that adapt to your life—helping with wellness, journaling, and daily decision-making.",
+    title: "Personal AI Co-Pilots",
+    desc: "Custom-trained AI systems that understand your goals, understands your routines, respects and evolves with your preferences—powered by private memory and secure context handling.",
   },
   {
     icon: Settings,
     title: "Goal-Oriented AI Workflows",
-    desc: "Whether you're planning a personal project, managing your schedule, or developing new habits—our AI helps break down tasks and drive consistent progress with adaptive nudges and structured guidance.",
+    desc: "Whether you're planning a personal project, managing your schedule, or developing new habits—our AI helps break down tasks and drive consistent progress with structured guidance.",
   },
   {
     icon: Users,
     title: "Private Knowledge Management",
-    desc: "Securely store, search, and interact with personal data like health info, travel history, or kids’ school notes—with natural AI recall.",
+    desc: "Securely store, search, and interact with personal data like health info, travel history, or kids’ school notes—with natural language processing.",
   },
   {
     icon: Server,
     title: "Contextual Micro-Coaching",
-    desc: "Get timely nudges, reflections, and encouragement for your goals—be it fitness, mindfulness, or learning something new.",
+    desc: "Get timely nudges, reflections, and encouragement for your goals—be it fitness, mindfulness, or learning something new. We have an AI for that!",
   },
 ];
 
@@ -78,7 +78,7 @@ export default function AIDrivenSolutions() {
           >
             <div className="aspect-w-16 aspect-h-9 w-full">
               <img 
-                src="/assets/images/BtoC.png" 
+                src="/assets/images/BtoC.png" //needs a better image
                 alt="AI-Driven Solutions" 
                 className="object-cover rounded-2xl w-full h-full"
               />
@@ -140,7 +140,7 @@ export default function AIDrivenSolutions() {
           >
             <div className="aspect-w-16 aspect-h-9 w-full">
               <img 
-                src="/assets/images/BtoB.png" 
+                src="/assets/images/BtoB.png" //needs a better image
                 alt="Enterprise AI Solutions" 
                 className="object-cover rounded-2xl w-full h-full"
               />

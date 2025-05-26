@@ -153,7 +153,7 @@ export const waitlistConfig: Record<string, WaitlistConfig> = {
     ],
     final_cta: {
       headline: "Get early access to your personal AI assistant",
-      subcopy: "Join our priority list for Personal AI Assistant, Life-Admin Automation, and Wellness Coach AI.",
+      subcopy: "Join our priority list for your Personal AI Co-Pilot.",
       button_label: "Join the Waitlist"
     }
   }

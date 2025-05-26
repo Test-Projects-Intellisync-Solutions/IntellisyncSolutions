@@ -7,7 +7,6 @@ import { waitlistConfig } from '../../data/waitlistConfig';
 import { 
   WaitlistVariant, 
   WaitlistAnswer, 
-  WaitlistProgress,
   WaitlistSubmission
 } from '../../types/waitlist';
 import { waitlistApi, waitlistStorage } from '../../lib/api';
@@ -35,23 +34,18 @@ const WaitlistPage: React.FC = () => {
   const steps = currentConfig?.steps || [];
   const totalSteps = steps.length;
 
-  // Load progress from localStorage on initial render
+  // Clear any saved progress on mount to always show variant selection
   useEffect(() => {
-    const savedProgress = waitlistStorage.loadProgress() as WaitlistProgress | null;
+    // Clear any saved progress to always show variant selection
+    waitlistStorage.clearProgress();
     
-    if (savedProgress) {
-      if (savedProgress.variant) {
-        setVariant(savedProgress.variant);
-      }
-      setCurrentStep(savedProgress.currentStep);
-      setAnswers(savedProgress.answers || []);
-      if (savedProgress.email) {
-        setEmail(savedProgress.email);
-      }
-      if (savedProgress.name) {
-        setName(savedProgress.name);
-      }
-    }
+    // Reset all state to initial values
+    setVariant(undefined);
+    setCurrentStep(0);
+    setAnswers([]);
+    setEmail('');
+    setName('');
+    setIsSubmitted(false);
   }, []);
 
   // Save progress to localStorage whenever relevant state changes

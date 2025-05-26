@@ -32,7 +32,7 @@ const Header: React.FC = () => {
           </a>
         </nav>
       </div>
-      <a href="/contact" className="ml-8">
+      <a href="/waitlist" className="ml-8">
   <Button variant="default" size="lg" className="flex items-center gap-2">
     <Mail className="w-5 h-5 text-accent2" /> Contact
   </Button>
