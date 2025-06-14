@@ -5,16 +5,7 @@
     { "src": "intellisync-website/package.json", "use": "@vercel/static-build", "config": { "distDir": "dist" } }
   ],
   "routes": [
-    { 
-      "src": "/api/(.*)", 
-      "dest": "/api/$1",
-      "headers": {
-        "Access-Control-Allow-Credentials": "true",
-        "Access-Control-Allow-Origin": "https://intellisync.io, https://www.intellisync.io, https://intellisync-solutions.vercel.app",
-        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-        "Access-Control-Allow-Headers": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization"
-      }
-    },
+    { "src": "/api/(.*)", "dest": "/server.js" },
     { "src": "/static/(.*)", "dest": "/intellisync-website/static/$1" },
     { "src": "/assets/(.*)", "dest": "/intellisync-website/assets/$1" },
     { "src": "^/.*", "dest": "/intellisync-website/index.html" }
