@@ -8,8 +8,7 @@
     { "src": "/api/(.*)", "dest": "/api/$1" },
     { "src": "/static/(.*)", "dest": "/intellisync-website/static/$1" },
     { "src": "/assets/(.*)", "dest": "/intellisync-website/assets/$1" },
-    { "src": "/(.*)", "dest": "/intellisync-website/$1" },
-    { "src": "/", "dest": "/intellisync-website/index.html" }
+    { "src": "^/.*", "dest": "/intellisync-website/index.html" }
   ],
   "build": {
     "env": {
@@ -18,6 +17,7 @@
   },
   "env": {
     "NODE_ENV": "production",
-    "CORS_ORIGIN": "https://your-production-url.vercel.app"
+    "CORS_ORIGIN": "https://intellisync-solutions.vercel.app",
+    "VITE_API_BASE_URL": "https://intellisync-solutions.vercel.app"
   }
 }
