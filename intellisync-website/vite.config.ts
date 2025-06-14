@@ -1,6 +1,10 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname, resolve } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -9,16 +13,21 @@ export default defineConfig({
     alias: [
       {
         find: '@',
-        replacement: path.resolve(__dirname, 'src')
+        replacement: resolve(__dirname, 'src')
       }
     ]
   },
   server: {
     proxy: {
-      '/api': 'http://localhost:5001'
+      '/api': {
+        target: 'http://localhost:5001',
+        changeOrigin: true,
+        secure: false
+      }
     }
   },
   build: {
-    sourcemap: true
+    sourcemap: true,
+    emptyOutDir: true
   }
 });
