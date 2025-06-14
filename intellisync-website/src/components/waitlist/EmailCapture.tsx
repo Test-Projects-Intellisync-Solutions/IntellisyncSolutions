@@ -15,7 +15,6 @@ interface EmailCaptureProps {
 const EmailCapture: React.FC<EmailCaptureProps> = ({
   finalCTA,
   onSubmit,
-  variant,
   initialEmail = '',
   initialName = ''
 }) => {

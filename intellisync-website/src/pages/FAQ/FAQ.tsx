@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { motion } from 'framer-motion';
-import { faqSections } from './FAQcontent';
+import { faqSections, FAQSection } from './FAQcontent';
 import FAQTabs from './FAQTabs';
 import FAQAccordion from './FAQAccordion';
 import SEO from '../../components/SEO';
@@ -12,11 +12,11 @@ const gradientBg = 'bg-gradient-to-br from-[#090d1f] via-[#1a1a2e] to-[#232946]'
 
 const FAQ: React.FC = () => {
   const [activeTab, setActiveTab] = useState(0);
-  const section = faqSections[activeTab];
+  const section: FAQSection = faqSections[activeTab];
   
   // Create FAQ structured data from all FAQ sections
-  const allFaqs = faqSections.flatMap((section: { faqs: Array<{ question: string, answer: string }> }) => 
-    section.faqs.map((faq: { question: string, answer: string }) => ({
+  const allFaqs = faqSections.flatMap((section: FAQSection) => 
+    section.items.map((faq) => ({
       question: faq.question,
       answer: faq.answer
     }))
@@ -60,13 +60,13 @@ const FAQ: React.FC = () => {
     Frequently Asked Questions
   </motion.h1>
   <div className="max-w-3xl mx-auto z-10 relative">
-    <FAQTabs
-      sections={faqSections.map((s: { section: string }) => s.section)}
-      activeTab={activeTab}
-      setActiveTab={setActiveTab}
+    <FAQTabs 
+      activeTab={activeTab} 
+      setActiveTab={setActiveTab} 
+      sections={faqSections.map((s: FAQSection) => s.title)}
     />
     <div className="mt-8">
-      <FAQAccordion faqs={section.faqs} />
+      <FAQAccordion faqs={section.items} />
     </div>
   </div>
 </section>

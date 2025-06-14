@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "server.js", "use": "@vercel/node" },
+    { "src": "intellisync-website/package.json", "use": "@vercel/static-build", "config": { "distDir": "dist" } }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/$1" },
+    { "src": "/static/(.*)", "dest": "/intellisync-website/static/$1" },
+    { "src": "/assets/(.*)", "dest": "/intellisync-website/assets/$1" },
+    { "src": "/(.*)", "dest": "/intellisync-website/$1" },
+    { "src": "/", "dest": "/intellisync-website/index.html" }
+  ],
+  "build": {
+    "env": {
+      "NODE_ENV": "production"
+    }
+  },
+  "env": {
+    "NODE_ENV": "production",
+    "CORS_ORIGIN": "https://your-production-url.vercel.app"
+  }
+}

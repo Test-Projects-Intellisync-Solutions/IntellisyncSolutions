@@ -83,17 +83,42 @@ const startServer = (port) => {
 };
 
 // Configure CORS to allow requests from the frontend
+const isProduction = process.env.NODE_ENV === 'production';
+const allowedOrigins = isProduction 
+  ? ['https://intellisync-solutions.vercel.app', 'https://www.intellisyncsolutions.com']
+  : ['http://localhost:5173', 'http://127.0.0.1:5173'];
+
 const corsOptions = {
-  origin: ['http://localhost:5173', 'http://127.0.0.1:5173'],
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    // Check if the origin is in the allowed origins
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = `The CORS policy for this site does not allow access from the specified origin: ${origin}`;
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
+  credentials: true,
+  optionsSuccessStatus: 200 // Some legacy browsers choke on 204
 };
-app.use(cors(corsOptions));
 
-// Handle preflight requests
-app.options('*', cors(corsOptions));
-app.use(express.json({ limit: '5mb' }));
+app.use(cors(corsOptions));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Serve static files from the React app in production
+if (isProduction) {
+  app.use(express.static(path.join(__dirname, 'intellisync-website/dist')));
+  
+  // Handle React routing, return all requests to React app
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'intellisync-website/dist/index.html'));
+  });
+}
 
 // Session management for caching system prompt and conversation history
 const sessions = new Map();
@@ -138,8 +163,8 @@ const openai = new OpenAI({ apiKey: process.env.VITE_OPENAI_API_KEY });
 
 // Default AI configuration
 const DEFAULT_AI_CONFIG = {
-  model: 'gpt-4.1',
-  temperature: 0.8,
+  model: 'gpt-4o',
+  temperature: 0.2,
   max_tokens: 10000,
   top_p: .8,
   frequency_penalty: .5,
@@ -333,6 +358,7 @@ Discovery → Prototype → Deploy → Train → Support. Full lifecycle, single
 Takeaway → Soup-to-nuts, minus the soup.
 
 18. “Can you outline your main service pillars?”
+
 	1.	Automation
 	2.	Analytics
 	3.	Advisory
@@ -340,6 +366,7 @@ Triple-A, zero downtime.
 Takeaway → Your workflows rated platinum.
 
 19. “Show me your top three offerings.”
+
 	•	GPT Builder Pro
 	•	Mnemos Enterprise
 	•	Custom MCP Clusters
@@ -646,5 +673,10 @@ data: ${JSON.stringify(error.message)}
   }
 });
 
-// Start the server with automatic port selection
-startServer(PORT);
+// Start the server in development
+if (process.env.NODE_ENV !== 'production') {
+  startServer(PORT);
+}
+
+// Export the Express API for Vercel Serverless Functions
+export default app;

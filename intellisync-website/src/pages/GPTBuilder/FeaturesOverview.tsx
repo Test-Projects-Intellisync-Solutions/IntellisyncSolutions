@@ -18,22 +18,7 @@ const features = [
 ];
 
 const FeaturesOverview: React.FC = () => {
-  // For parallax effect
-  const [scrollX, setScrollX] = React.useState(0);
   const carouselRef = React.useRef<HTMLDivElement>(null);
-
-  React.useEffect(() => {
-    const handleScroll = () => {
-      if (carouselRef.current) {
-        setScrollX(carouselRef.current.scrollLeft);
-      }
-    };
-    const ref = carouselRef.current;
-    if (ref) {
-      ref.addEventListener('scroll', handleScroll);
-      return () => ref.removeEventListener('scroll', handleScroll);
-    }
-  }, []);
 
   return (
     <section className="relative w-full py-24 px-0 bg-gradient-to-br from-[#090d1f] via-[#1a1a2e] to-[#232946] overflow-hidden">

@@ -1,7 +1,9 @@
 {
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"node server.js\" \"npm run dev --prefix intellisync-website\""
+    "dev": "concurrently \"node server.js\" \"npm run dev --prefix intellisync-website\"",
+    "build": "cd intellisync-website && npm install && npm run build",
+    "start": "node server.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.4",
