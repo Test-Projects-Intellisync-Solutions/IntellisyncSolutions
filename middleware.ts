@@ -1,5 +1,7 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+// middleware.ts
+export const config = {
+  matcher: '/api/:path*',
+};
 
 const allowedOrigins = [
   'https://intellisync.io',
@@ -7,36 +9,27 @@ const allowedOrigins = [
   'https://intellisync-solutions.vercel.app',
 ];
 
-// This function can be marked `async` if using `await` inside
-export function middleware(request: NextRequest) {
-  // Handle preflight requests
-  if (request.method === 'OPTIONS') {
-    const requestHeaders = new Headers(request.headers);
-    const origin = requestHeaders.get('origin');
-
-    if (origin && allowedOrigins.includes(origin)) {
-      const response = new Response(null, { status: 204 });
-      response.headers.set('Access-Control-Allow-Origin', origin);
-      response.headers.set('Access-Control-Allow-Credentials', 'true');
-      response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-      response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-      return response;
-    }
-  }
-
-  // Handle actual requests
-  const response = NextResponse.next();
+export default function middleware(request: Request) {
   const origin = request.headers.get('origin');
 
-  if (origin && allowedOrigins.includes(origin)) {
-    response.headers.set('Access-Control-Allow-Origin', origin);
-    response.headers.set('Access-Control-Allow-Credentials', 'true');
+  // Handle preflighted requests by returning a response with the correct headers.
+  if (
+    request.method === 'OPTIONS' &&
+    origin &&
+    allowedOrigins.includes(origin)
+  ) {
+    return new Response(null, {
+      status: 204, // No Content
+      headers: {
+        'Access-Control-Allow-Origin': origin,
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Credentials': 'true',
+      },
+    });
   }
 
-  return response;
+  // For all other requests, let them pass through to the origin serverless function.
+  // The `cors` middleware in `server.js` will handle adding headers to the actual response.
+  return;
 }
-
-// See "Matching Paths" below to learn more
-export const config = {
-  matcher: '/api/:path*',
-};
