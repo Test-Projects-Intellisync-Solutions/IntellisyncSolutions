@@ -98,22 +98,7 @@ const corsOptions = {
   credentials: true,
 };
 
-// Manually handle preflight requests FIRST
-app.options('*', (req, res) => {
-  console.log('Manual OPTIONS handler triggered for origin:', req.headers.origin);
-  const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-  } else {
-    console.log('Origin not in allowed list:', req.headers.origin);
-  }
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.status(204).send();
-});
-
-// Then, use CORS for all other requests
+// Use CORS for all requests
 app.use(cors(corsOptions));
 
 app.use(express.json());
