@@ -93,23 +93,21 @@ const allowedOrigins = isProduction
     ]
   : ['http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost:5174'];
 
-// Enable CORS for all routes
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-  }
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  
-  // Handle preflight requests
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-  
-  next();
-});
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests) during development
+    if (!origin && !isProduction) return callback(null, true);
+
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -508,27 +506,8 @@ const DEV_CUSTOM_INSTRUCTIONS = `<!-- Dev-Custom-Instructions • Syntherion •
  
 // ===================  END SYSTEM PROMPT  =================== //
 
-// Handle OPTIONS for preflight
-app.options('/api/ai/stream', (req, res) => {
-  const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-  }
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.status(200).end();
-});
-
 // Streaming endpoint for GPT-4.1-nano
 app.post('/api/ai/stream', async (req, res) => {
-  // Set CORS headers for the actual request
-  const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-  }
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  
   try {
     const { messages, max_tokens, temperature, sessionId } = req.body;
     if (!Array.isArray(messages) || messages.length === 0) {
