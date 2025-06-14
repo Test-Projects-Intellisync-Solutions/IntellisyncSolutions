@@ -84,22 +84,56 @@ const startServer = (port) => {
 
 // Configure CORS to allow requests from the frontend
 const isProduction = process.env.NODE_ENV === 'production';
-const allowedOrigins = isProduction 
-  ? [
-      'https://intellisync-solutions.vercel.app',
-      'https://www.intellisyncsolutions.com',
-      'https://www.intellisync.io',
-      'https://intellisync.io'
-    ]
-  : ['http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost:5174'];
 
+// Parse allowed origins from environment variable or use defaults
+const allowedOrigins = (() => {
+  if (process.env.CORS_ORIGIN) {
+    return process.env.CORS_ORIGIN.split(',').map(origin => origin.trim());
+  }
+  return isProduction ? [
+    'https://intellisync-solutions.vercel.app',
+    'https://www.intellisyncsolutions.com',
+    'https://www.intellisync.io',
+    'https://intellisync.io'
+  ] : [
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    'http://localhost:5174'
+  ];
+})();
+
+// CORS configuration
 const corsOptions = {
-  origin: allowedOrigins,
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.includes('*')) {
+      return callback(null, true);
+    }
+    
+    if (allowedOrigins.some(allowedOrigin => 
+      origin === allowedOrigin || 
+      origin.endsWith(allowedOrigin.replace(/^https?:\/\//, ''))
+    )) {
+      return callback(null, true);
+    }
+    
+    const msg = `The CORS policy for this site does not allow access from the specified Origin: ${origin}.`;
+    return callback(new Error(msg), false);
+  },
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar'],
+  maxAge: 86400 // 24 hours
 };
 
-// Use CORS for all requests
+// Enable CORS for all routes
 app.use(cors(corsOptions));
+
+// Handle preflight requests
+app.options('*', cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -583,6 +617,38 @@ ${eventContext}
       // Fallback: use original messages
       processedMessages = messages;
     }
+
+    const corsOptions = {
+      origin: function (origin, callback) {
+        const allowedOrigins = getAllowedOrigins();
+        // Allow requests with no origin (like mobile apps, curl requests, or server-side requests)
+        if (!origin) return callback(null, true);
+        
+        if (allowedOrigins.includes('*')) {
+          return callback(null, true);
+        }
+        
+        if (allowedOrigins.some(allowedOrigin => 
+          origin === allowedOrigin || 
+          origin.endsWith(allowedOrigin.replace(/^https?:\/\//, ''))
+        )) {
+          return callback(null, true);
+        }
+        
+        const msg = `The CORS policy for this site does not allow access from the specified Origin: ${origin}.`;
+        return callback(new Error(msg), false);
+      },
+      credentials: true,
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+      exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar'],
+      maxAge: 86400 // 24 hours
+    };
+
+    app.use(cors(corsOptions));
+
+    // Handle preflight requests
+    app.options('*', cors(corsOptions));
 
     res.setHeader('Content-Type', 'text/event-stream');
     res.setHeader('Cache-Control', 'no-cache');
