@@ -85,8 +85,13 @@ const startServer = (port) => {
 // Configure CORS to allow requests from the frontend
 const isProduction = process.env.NODE_ENV === 'production';
 const allowedOrigins = isProduction 
-  ? ['https://intellisync-solutions.vercel.app', 'https://www.intellisyncsolutions.com']
-  : ['http://localhost:5173', 'http://127.0.0.1:5173'];
+  ? [
+      'https://intellisync-solutions.vercel.app',
+      'https://www.intellisyncsolutions.com',
+      'https://www.intellisync.io',
+      'https://intellisync.io'
+    ]
+  : ['http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost:5174'];
 
 const corsOptions = {
   origin: function (origin, callback) {
