@@ -138,13 +138,20 @@ app.options('*', cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Get the current directory in ES modules
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 // Serve static files from the React app in production
 if (isProduction) {
-  app.use(express.static(path.join(__dirname, 'intellisync-website/dist')));
+  app.use(express.static(join(__dirname, 'intellisync-website/dist')));
   
   // Handle React routing, return all requests to React app
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'intellisync-website/dist/index.html'));
+    res.sendFile(join(__dirname, 'intellisync-website/dist/index.html'));
   });
 }
 
