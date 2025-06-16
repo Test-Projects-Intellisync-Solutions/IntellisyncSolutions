@@ -47,7 +47,7 @@ const Header: React.FC = () => {
         </div>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex flex-1 justify-center">
+        <div className="hidden lg:flex flex-1 justify-center">
           <nav className="flex items-center gap-2 lg:gap-6 font-body text-base">
             <a href="/" className="flex items-center gap-2 text-gray-100 hover:text-accent1 transition-colors px-3 py-2">
               <HomeIcon className="w-5 h-5 text-accent1" />
@@ -77,7 +77,7 @@ const Header: React.FC = () => {
         </div>
 
         {/* Mobile menu button */}
-        <div className="md:hidden flex items-center">
+        <div className="lg:hidden flex items-center">
           <button
             onClick={toggleMenu}
             className="menu-button inline-flex items-center justify-center p-2 rounded-md text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none"
@@ -93,7 +93,7 @@ const Header: React.FC = () => {
         </div>
 
         {/* Contact Button - Hidden on mobile, shown on desktop */}
-        <div className="hidden md:block">
+        <div className="hidden lg:block">
           <a href="/waitlist">
             <Button variant="default" size="lg" className="flex items-center gap-2">
               <Mail className="w-5 h-5 text-accent2" /> Contact
@@ -104,7 +104,7 @@ const Header: React.FC = () => {
 
       {/* Mobile menu */}
       <div 
-        className={`mobile-menu md:hidden transition-all duration-300 ease-in-out overflow-hidden ${
+        className={`mobile-menu lg:hidden transition-all duration-300 ease-in-out overflow-hidden ${
           isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
         }`}
       >
