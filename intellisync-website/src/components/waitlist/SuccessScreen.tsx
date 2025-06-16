@@ -5,10 +5,10 @@ import Confetti from './Confetti';
 import { Link } from 'react-router-dom';
 
 interface SuccessScreenProps {
-  email: string;
+  // email: string;  // Currently unused - reserved for future service integration
 }
 
-const SuccessScreen: React.FC<SuccessScreenProps> = ({ email }) => {
+const SuccessScreen: React.FC<SuccessScreenProps> = () => {
   // Prepare social share messages
   const shareMessage = encodeURIComponent(
     "I just joined the Intellisync AI early-access waitlist—can't wait to see what my custom AI can do!"
@@ -36,14 +36,20 @@ const SuccessScreen: React.FC<SuccessScreenProps> = ({ email }) => {
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.5 }}
       >
-        <h2 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-tr from-cta via-accent1 to-white bg-clip-text text-transparent mb-4 drop-shadow-lg">🎉 You're on the list!</h2>
+        <h2 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-tr from-cta via-accent1 to-white bg-clip-text text-transparent mb-4 drop-shadow-lg">🎉 You're Almost There!</h2>
         <p className="text-lg text-accent1 mb-8">
-          We'll send your personalized preview soon—zero spam, promise.
+          We've prepared an email for you to complete your submission.
         </p>
         
         <div className="mb-6 p-4 bg-black/30 rounded-2xl border border-accent2 shadow-lg backdrop-blur-sm">
-          <p className="text-sm text-white">
-            Confirmation sent to: <span className="text-accent1 font-medium">{email}</span>
+          <p className="text-sm text-white mb-2">
+            Please check your email client, review the details, and hit send to secure your spot on our waitlist.
+          </p>
+          <p className="text-sm text-gray-300">
+            If you don't see the email, please check your drafts or email us directly at{' '}
+            <a href="mailto:chris.june@intellisync.ca" className="text-accent1 hover:underline">
+              chris.june@intellisync.ca
+            </a>
           </p>
         </div>
         

@@ -2,38 +2,55 @@ import { WaitlistSubmission } from "../types/waitlist";
 
 // API service for waitlist submissions
 export const waitlistApi = {
-  // Submit waitlist entry
+  // Submit waitlist entry and send email notification
   submitWaitlist: async (data: WaitlistSubmission): Promise<{ success: boolean; message: string }> => {
     try {
-      // In a real implementation, this would be an actual API endpoint
-      // For now, we'll simulate a successful API call
-      const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || '';
-      const response = await fetch(`${apiBaseUrl}/api/waitlist`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
+      // Import the waitlist config to get question texts
+      const { waitlistConfig } = await import('../data/waitlistConfig');
+      
+      // Get the config for the selected variant
+      const config = waitlistConfig[data.variant];
+      
+      // Create a map of stepId to question text
+      const questionMap = new Map<string, string>();
+      config.steps.forEach(step => {
+        questionMap.set(step.id, step.question);
       });
+      
+      // Format the email body with the waitlist submission details
+      const emailSubject = `New Waitlist Submission - ${data.variant} - ${data.name}`;
+      const emailBody = `New waitlist submission received:\n\n` +
+        `Name: ${data.name}\n` +
+        `Email: ${data.email}\n` +
+        `Variant: ${data.variant.charAt(0).toUpperCase() + data.variant.slice(1)}\n\n` +
+        `Answers:\n` +
+        data.answers.map(a => {
+          const answer = Array.isArray(a.answer) ? a.answer.join(', ') : a.answer;
+          const questionText = questionMap.get(a.stepId) || a.stepId;
+          return `- ${questionText}: ${answer}`;
+        }).join('\n\n');
 
-      // For development purposes, simulate a successful response
-      // In production, you would handle the actual API response
-      if (!response.ok) {
-        throw new Error('Failed to submit waitlist entry');
-      }
+      // Create mailto link
+      const mailtoLink = `mailto:chris.june@intellisync.ca?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+      
+      // Open user's default email client with pre-filled email
+      window.location.href = mailtoLink;
 
+      // Log the submission for debugging
+      console.log('Waitlist submission:', data);
+      
       return { 
         success: true, 
-        message: 'Successfully joined the waitlist!' 
+        message: 'Successfully joined the waitlist! Please check your email to complete the submission.' 
       };
     } catch (error) {
       console.error('Error submitting waitlist entry:', error);
       
-      // For development, simulate success even on error
-      // In production, you would return an error message
+      // Return success even if email client fails to open
+      // This prevents users from getting stuck if they have email issues
       return { 
         success: true, 
-        message: 'Successfully joined the waitlist!' 
+        message: 'Successfully joined the waitlist! If you have any questions, please contact us at chris.june@intellisync.ca' 
       };
     }
   }

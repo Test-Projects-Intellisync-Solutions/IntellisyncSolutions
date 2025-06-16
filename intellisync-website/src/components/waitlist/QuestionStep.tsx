@@ -90,11 +90,20 @@ const QuestionStep: React.FC<QuestionStepProps> = ({
       transition={{ duration: 0.3 }}
     >
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-white mb-2">{step.question}</h2>
+        <div className="flex items-center gap-2">
+          <h2 className="text-2xl font-bold text-white">
+            {step.question}
+            {step.type === 'multi' && (
+              <span className="ml-2 text-sm font-normal text-accent1">
+                (Select all that apply)
+              </span>
+            )}
+          </h2>
+        </div>
         {step.helper && (
           <Tooltip content={step.helper}>
             <p className="text-gray-400 text-sm cursor-help border-b border-dotted border-gray-600 inline-block">
-              Need help with this question?
+              Need help with this question?{step.type === 'multi' ? ' (Multiple selections allowed)' : ''}
             </p>
           </Tooltip>
         )}
