@@ -16,35 +16,47 @@ const FAQAccordion: React.FC<FAQAccordionProps> = ({ faqs }) => {
   return (
     <div className="space-y-4">
       {faqs.map((faq, idx) => (
-        <div key={faq.question} className={`rounded-xl shadow-xl border border-accent1/30 bg-[#181a28] transition-all duration-200 ${openIndex === idx ? 'ring-2 ring-cta/60' : ''}`}>
-  <button
-    className="w-full flex justify-between items-center px-6 py-4 text-lg font-semibold focus:outline-none text-left"
-    onClick={() => toggle(idx)}
-  >
-    <span className="text-accent1">{faq.question}</span>
-    <motion.span
-      animate={{ rotate: openIndex === idx ? 90 : 0 }}
-      transition={{ duration: 0.2 }}
-      className={`ml-2 text-cta text-xl transition-colors duration-200 ${openIndex === idx ? 'text-accent1' : ''}`}
-    >
-      ▶
-    </motion.span>
-  </button>
-  <AnimatePresence initial={false}>
-    {openIndex === idx && (
-      <motion.div
-        layout
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ opacity: { duration: 0.25 } }}
-        className="overflow-hidden px-6 pb-4 text-accent1"
-      >
-        {faq.answer}
-      </motion.div>
-    )}
-  </AnimatePresence>
-</div>
+        <motion.div 
+          key={faq.question} 
+          className={`rounded-xl shadow-xl border border-accent1/30 bg-[#181a28] overflow-hidden ${openIndex === idx ? 'ring-2 ring-cta/60' : ''}`}
+          layout
+        >
+          <button
+            className="w-full flex justify-between items-center px-6 py-4 text-lg font-semibold focus:outline-none text-left"
+            onClick={() => toggle(idx)}
+          >
+            <motion.span className="text-accent1">{faq.question}</motion.span>
+            <motion.span
+              animate={{ rotate: openIndex === idx ? 90 : 0 }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
+              className="ml-2 text-cta text-xl"
+            >
+              ▶
+            </motion.span>
+          </button>
+          
+          <AnimatePresence initial={false}>
+            {openIndex === idx && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
+                className="overflow-hidden"
+              >
+                <motion.div 
+                  className="px-6 pb-4 pt-0 text-gray-300"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ delay: 0.1, duration: 0.2 }}
+                >
+                  {faq.answer}
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
       ))}
     </div>
   );

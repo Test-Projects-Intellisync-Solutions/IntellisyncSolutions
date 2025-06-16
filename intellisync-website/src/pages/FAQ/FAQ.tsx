@@ -12,15 +12,17 @@ const gradientBg = 'bg-gradient-to-br from-[#090d1f] via-[#1a1a2e] to-[#232946]'
 
 const FAQ: React.FC = () => {
   const [activeTab, setActiveTab] = useState(0);
-  const section: FAQSection = faqSections[activeTab];
   
   // Create FAQ structured data from all FAQ sections
   const allFaqs = faqSections.flatMap((section: FAQSection) => 
-    section.items.map((faq) => ({
+    section.faqs.map((faq) => ({
       question: faq.question,
       answer: faq.answer
     }))
   );
+  
+  // Get current section
+  const section = faqSections[activeTab];
   
   // Create FAQ schema
   const faqSchema = getFAQSchema(allFaqs);
@@ -57,16 +59,16 @@ const FAQ: React.FC = () => {
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.6 }}
   >
-    Frequently Asked Questions
+    {section.section}
   </motion.h1>
   <div className="max-w-3xl mx-auto z-10 relative">
     <FAQTabs 
       activeTab={activeTab} 
       setActiveTab={setActiveTab} 
-      sections={faqSections.map((s: FAQSection) => s.title)}
+      sections={faqSections.map((s: FAQSection) => s.section)}
     />
     <div className="mt-8">
-      <FAQAccordion faqs={section.items} />
+      <FAQAccordion faqs={section.faqs} />
     </div>
   </div>
 </section>

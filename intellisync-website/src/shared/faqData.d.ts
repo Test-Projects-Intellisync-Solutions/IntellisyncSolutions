@@ -5,8 +5,8 @@ export interface FAQItem {
 }
 
 export interface FAQSection {
-  title: string;
-  items: FAQItem[];
+  section: string;
+  faqs: FAQItem[];
 }
 
 export const faqSections: FAQSection[];
