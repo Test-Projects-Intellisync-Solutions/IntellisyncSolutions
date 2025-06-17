@@ -541,7 +541,7 @@ export const StickyChat: React.FC<StickyChatProps> = ({ onSend, eventContext }) 
 
             {/* Input area */}
             <form
-              className="p-4 border-t border-border bg-white/70 dark:bg-zinc-900/70 rounded-b-3xl flex gap-2"
+              className="p-3 sm:p-4 border-t border-border bg-white/70 dark:bg-zinc-900/70 rounded-b-3xl flex gap-2"
               onSubmit={(e) => {
                 e.preventDefault();
                 handleSend();
