@@ -5,12 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:all": "concurrently \"npm run dev\" \"cd backend && npm start\"",
+    "dev:all": "echo 'Use the dev:all script from the root directory instead'",
     "build": "tsc -b && node scripts/generate-sitemap.js && vite build",
     "generate-sitemap": "node scripts/generate-sitemap.js",
     "lint": "eslint .",
     "preview": "vite preview",
-    "server": "cd backend && npm start"
+    "server": "node ../server.js"
   },
   "dependencies": {
     "@shadcn/ui": "^0.0.4",

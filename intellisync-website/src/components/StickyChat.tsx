@@ -4,7 +4,9 @@ import { cn } from '../lib/utils';
 import { Button } from './ui/Button';
 import { Textarea } from './ui/Textarea';
 import { X, Trash2 } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 import SyntherionResponse from './ui/SyntherionResponse';
+import { getPricingOverview } from '../data/chatPricingContext';
 
 // Helper function to extract bullets from malformed JSON
 const extractBullets = (jsonString: string): string[] => {
@@ -250,6 +252,8 @@ interface StickyChatProps {
 }
 
 export const StickyChat: React.FC<StickyChatProps> = ({ onSend, eventContext }) => {
+  const location = useLocation();
+  const isPricingPage = location.pathname.includes('/pricing');
   // Load messages from sessionStorage (if available) on mount
   const [messages, setMessages] = useState<Message[]>(() => {
     if (typeof window !== 'undefined') {
@@ -314,10 +318,10 @@ export const StickyChat: React.FC<StickyChatProps> = ({ onSend, eventContext }) 
 
   const handleSend = async () => {
     if (input.trim()) {
-      // Add user message to chat
+      // Add user message to chat (without context)
       const userMessage: Message = {
         role: 'user',
-        content: input,
+        content: input, // Store original message without context
         timestamp: Date.now()
       };
       
@@ -326,8 +330,14 @@ export const StickyChat: React.FC<StickyChatProps> = ({ onSend, eventContext }) 
       setLoading(true);
       
       try {
-        // Get response from AI
-        const response = await onSend(input, eventContext);
+        // Prepare the full context for the AI
+        let fullContext = input;
+        if (isPricingPage) {
+          fullContext = `User is on the pricing page. ${input} \n\nPricing Context:\n${getPricingOverview()}`;
+        }
+        
+        // Include both the original message and the enhanced context
+        const response = await onSend(fullContext, eventContext || (isPricingPage ? 'pricing_page' : undefined));
         
         // Try to parse the response as JSON using our debug utility
         let parsedResponse = null;
