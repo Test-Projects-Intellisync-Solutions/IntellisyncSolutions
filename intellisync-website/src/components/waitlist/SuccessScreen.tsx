@@ -5,10 +5,10 @@ import Confetti from './Confetti';
 import { Link } from 'react-router-dom';
 
 interface SuccessScreenProps {
-  // email: string;  // Currently unused - reserved for future service integration
+  email: string;
 }
 
-const SuccessScreen: React.FC<SuccessScreenProps> = () => {
+const SuccessScreen: React.FC<SuccessScreenProps> = ({ email }) => {
   // Prepare social share messages
   const shareMessage = encodeURIComponent(
     "I just joined the Intellisync AI early-access waitlist—can't wait to see what my custom AI can do!"
@@ -37,8 +37,11 @@ const SuccessScreen: React.FC<SuccessScreenProps> = () => {
         transition={{ delay: 0.2, duration: 0.5 }}
       >
         <h2 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-tr from-cta via-accent1 to-white bg-clip-text text-transparent mb-4 drop-shadow-lg">🎉 You're Almost There!</h2>
-        <p className="text-lg text-accent1 mb-8">
-          We've prepared an email for you to complete your submission.
+        <p className="text-lg text-accent1 mb-4">
+          We've sent a confirmation email to <span className="font-semibold">{email}</span>.
+        </p>
+        <p className="text-accent1 mb-4">
+          Please check your inbox (and spam folder) to complete your submission.
         </p>
         
         <div className="mb-6 p-4 bg-black/30 rounded-2xl border border-accent2 shadow-lg backdrop-blur-sm">
