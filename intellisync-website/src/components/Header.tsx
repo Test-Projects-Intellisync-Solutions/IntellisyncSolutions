@@ -41,9 +41,6 @@ const Header: React.FC = () => {
       <div className="container mx-auto px-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <img src="/assets/logo.png" alt="Intellisync Logo" className="h-10 w-auto" />
-          <span className="text-xl md:text-2xl font-header font-bold text-surface">
-            Intellisync Solutions
-          </span>
         </div>
 
         {/* Desktop Navigation */}
