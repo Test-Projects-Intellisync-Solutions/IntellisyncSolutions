@@ -1,7 +1,9 @@
 {
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"node server.js\" \"npm run dev --prefix intellisync-website\"",
+    "dev": "node server.js",
+    "dev:frontend": "cd intellisync-website && npm run dev",
+    "dev:all": "concurrently \"npm run dev\" \"npm run dev:frontend\"",
     "build": "cd intellisync-website && npm install && npm run build",
     "start": "node server.js"
   },
