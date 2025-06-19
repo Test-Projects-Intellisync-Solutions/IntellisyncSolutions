@@ -49,7 +49,7 @@ const Hero: React.FC = () => {
               className="bg-accent1 text-[#232946] font-bold hover:bg-accent1/90 px-6 py-3 rounded-full shadow-lg"
               size="lg"
               aria-label="Start Building"
-              onClick={() => window.open('https://intellisyncsolutions.io', '_blank', 'noopener,noreferrer')}
+              onClick={() => window.open('https://gpt.intellisync.io', '_blank', 'noopener,noreferrer')}
             >
               Start Building
             </Button>
