@@ -14,6 +14,7 @@ import WaitlistPage from "./pages/waitlist";
 import FAQ from "./pages/FAQ/FAQ";
 import ScrollToTop from './components/ScrollToTop';
 import MnemosysCaseStudyPage from "./pages/products/mnemosys-case-study";
+import ProductsPage from './pages/products/ProductsPage';
 
 
 
@@ -78,6 +79,7 @@ function App() {
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/store" element={<StorePage />} />
+          <Route path="/products" element={<ProductsPage />} />
         </Routes>
         {/* StickyChat now gets eventContext from ChatWithContext, which is inside the Router context */}
         <ChatWithContext />
