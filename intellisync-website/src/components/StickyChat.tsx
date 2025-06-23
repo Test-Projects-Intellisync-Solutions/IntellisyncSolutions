@@ -5,7 +5,7 @@ import { Button } from './ui/Button';
 import { Textarea } from './ui/Textarea';
 import { X, Trash2 } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
-import SyntherionResponse from './ui/SyntherionResponse';
+import { trackChatMessage, updateConversationHistory } from '../lib/chatAnalytics';
 import { getPricingOverview } from '../data/chatPricingContext';
 
 // Helper function to extract bullets from malformed JSON
@@ -108,6 +108,7 @@ interface ChatInputProps {
 }
 
 interface Message {
+  id?: string;
   role: 'user' | 'assistant';
   content: string;
   timestamp: number;
@@ -205,11 +206,9 @@ export const ChatModelResponse: React.FC<ChatModelResponseProps> = ({ response, 
   }
 
   // If we still don't have a parsed response, use the raw text
-  const displayContent = parsedResponse ? (
-    <SyntherionResponse data={parsedResponse} />
-  ) : (
+  const displayContent = (
     <div className="p-4 whitespace-pre-line break-words text-base min-h-[1.5em] bg-background/95 dark:bg-zinc-900/95 text-black dark:text-white">
-      {response}
+      {parsedResponse ? JSON.stringify(parsedResponse, null, 2) : response}
     </div>
   );
 
@@ -318,10 +317,24 @@ export const StickyChat: React.FC<StickyChatProps> = ({ onSend, eventContext }) 
 
   const handleSend = async () => {
     if (input.trim()) {
+      const userContent = input.trim();
+      
+      // Track user message in analytics
+      await trackChatMessage(userContent, {
+        role: 'user',
+        pageContext: isPricingPage ? 'pricing_page' : eventContext,
+        timestamp: new Date().toISOString(),
+        isPricingPage
+      });
+      
+      // Update conversation history
+      updateConversationHistory('user', userContent);
+      
       // Add user message to chat (without context)
       const userMessage: Message = {
+        id: `user-${Date.now()}`,
         role: 'user',
-        content: input, // Store original message without context
+        content: userContent,
         timestamp: Date.now()
       };
       
@@ -331,9 +344,9 @@ export const StickyChat: React.FC<StickyChatProps> = ({ onSend, eventContext }) 
       
       try {
         // Prepare the full context for the AI
-        let fullContext = input;
+        let fullContext = userContent;
         if (isPricingPage) {
-          fullContext = `User is on the pricing page. ${input} \n\nPricing Context:\n${getPricingOverview()}`;
+          fullContext = `User is on the pricing page. ${userContent} \n\nPricing Context:\n${getPricingOverview()}`;
         }
         
         // Include both the original message and the enhanced context
@@ -386,6 +399,18 @@ export const StickyChat: React.FC<StickyChatProps> = ({ onSend, eventContext }) 
             console.error('Manual JSON extraction failed:', e);
           }
         }
+        
+        // Track AI response in analytics
+        await trackChatMessage(response, {
+          role: 'assistant',
+          pageContext: isPricingPage ? 'pricing_page' : eventContext,
+          timestamp: new Date().toISOString(),
+          isPricingPage,
+          userMessageId: userMessage.id, // Link to the user's message
+        });
+        
+        // Update conversation history with AI response
+        updateConversationHistory('assistant', response);
         
         // Add AI response to chat
         const aiMessage: Message = {
@@ -482,59 +507,78 @@ export const StickyChat: React.FC<StickyChatProps> = ({ onSend, eventContext }) 
                     </div>
                   ) : (
                     <div className="max-w-[95%]">
-                      {msg.parsedResponse ? (
-                        <SyntherionResponse data={msg.parsedResponse} animate={false} />
-                      ) : (
-                        // Try to parse the content as JSON if it's a string that looks like JSON
-                        typeof msg.content === 'string' && (msg.content.includes('"section"') || (msg.content.trim().startsWith('{') && msg.content.trim().endsWith('}'))) ? (
-                          (() => {
-                            let parsedContent = null;
-                            
-                            // First try direct parsing
-                            if (typeof msg.content === 'string') {
-                              parsedContent = debugJsonParse(msg.content);
+                      {(() => {
+                        // Handle parsed response
+                        if (msg.parsedResponse) {
+                          return (
+                            <div className="p-4 whitespace-pre-line break-words text-base bg-background/95 dark:bg-zinc-900/95 text-black dark:text-white">
+                              {JSON.stringify(msg.parsedResponse, null, 2)}
+                            </div>
+                          );
+                        }
+                        
+                        // Handle non-string content
+                        if (typeof msg.content !== 'string') {
+                          return (
+                            <div className="px-4 py-2 rounded-2xl whitespace-pre-line break-words text-base shadow-sm bg-zinc-100 dark:bg-zinc-800 text-black dark:text-white rounded-bl-md">
+                              {String(msg.content)}
+                            </div>
+                          );
+                        }
+                        
+                        // Check if content looks like JSON
+                        const isJsonLike = msg.content.includes('"section"') || 
+                          (msg.content.trim().startsWith('{') && msg.content.trim().endsWith('}'));
+                        
+                        if (!isJsonLike) {
+                          return (
+                            <div className="px-4 py-2 rounded-2xl whitespace-pre-line break-words text-base shadow-sm bg-zinc-100 dark:bg-zinc-800 text-black dark:text-white rounded-bl-md">
+                              {msg.content}
+                            </div>
+                          );
+                        }
+                        
+                        // Try to parse the content
+                        let parsedContent = debugJsonParse(msg.content);
+                        
+                        // If that fails, try with trimming
+                        if (!parsedContent) {
+                          const trimmedContent = msg.content.trim();
+                          parsedContent = debugJsonParse(trimmedContent);
+                          
+                          // If still failing, try manual extraction
+                          if (!parsedContent && msg.content.includes('"section"')) {
+                            try {
+                              // Extract JSON by finding the first { and last }
+                              const firstBrace = msg.content.indexOf('{');
+                              const lastBrace = msg.content.lastIndexOf('}');
                               
-                              // If that fails, try with trimming
-                              if (!parsedContent) {
-                                const trimmedContent = msg.content.trim();
-                                parsedContent = debugJsonParse(trimmedContent);
-                                
-                                // If still failing, try manual extraction
-                                if (!parsedContent && msg.content.includes('"section"')) {
-                                  try {
-                                    // Extract JSON by finding the first { and last }
-                                    const firstBrace = msg.content.indexOf('{');
-                                    const lastBrace = msg.content.lastIndexOf('}');
-                                    
-                                    if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
-                                      const jsonSubstring = msg.content.substring(firstBrace, lastBrace + 1);
-                                      parsedContent = debugJsonParse(jsonSubstring);
-                                    }
-                                  } catch (e) {
-                                    console.error('Message rendering - Manual extraction failed:', e);
-                                  }
-                                }
+                              if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+                                const jsonSubstring = msg.content.substring(firstBrace, lastBrace + 1);
+                                parsedContent = debugJsonParse(jsonSubstring);
                               }
+                            } catch (e) {
+                              console.error('Message rendering - Manual extraction failed:', e);
                             }
-                            
-                            // If we successfully parsed the JSON, render it with SyntherionResponse
-                            if (parsedContent) {
-                              return <SyntherionResponse data={parsedContent} animate={false} />;
-                            } else {
-                              // Fallback to plain text rendering
-                              return (
-                                <div className="px-4 py-2 rounded-2xl whitespace-pre-line break-words text-base shadow-sm bg-zinc-100 dark:bg-zinc-800 text-black dark:text-white rounded-bl-md">
-                                  {msg.content}
-                                </div>
-                              );
-                            }
-                          })()
-                        ) : (
+                          }
+                        }
+                        
+                        // If we successfully parsed the JSON, render it as formatted JSON
+                        if (parsedContent) {
+                          return (
+                            <div className="p-4 whitespace-pre-line break-words text-base bg-background/95 dark:bg-zinc-900/95 text-black dark:text-white">
+                              {JSON.stringify(parsedContent, null, 2)}
+                            </div>
+                          );
+                        }
+                        
+                        // Fallback to rendering the original content
+                        return (
                           <div className="px-4 py-2 rounded-2xl whitespace-pre-line break-words text-base shadow-sm bg-zinc-100 dark:bg-zinc-800 text-black dark:text-white rounded-bl-md">
                             {msg.content}
                           </div>
-                        )
-                      )}
+                        );
+                      })()}
                     </div>
                   )}
                 </motion.div>
@@ -552,9 +596,10 @@ export const StickyChat: React.FC<StickyChatProps> = ({ onSend, eventContext }) 
             {/* Input area */}
             <form
               className="p-3 sm:p-4 border-t border-border bg-white/70 dark:bg-zinc-900/70 rounded-b-3xl flex gap-2"
-              onSubmit={(e) => {
+              onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                 e.preventDefault();
                 handleSend();
+                return false;
               }}
             >
               <Textarea

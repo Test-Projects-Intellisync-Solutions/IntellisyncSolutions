@@ -740,6 +740,132 @@ data: ${JSON.stringify(error.message)}
   }
 });
 
+// Analytics endpoint for chat data
+app.get('/api/chat/analytics', async (req, res) => {
+  try {
+    const { startDate, endDate, intent, sentiment, limit = '100', offset = '0' } = req.query;
+    const summaryOnly = req.query.limit === '0';
+
+    // Initialize Supabase client
+    const { createClient } = await import('@supabase/supabase-js');
+    const supabase = createClient(
+      process.env.VITE_SUPABASE_URL,
+      process.env.VITE_SUPABASE_ANON_KEY
+    );
+
+    // Get total messages count
+    let query = supabase
+      .from('chat_messages')
+      .select('*', { count: 'exact', head: true });
+
+    if (startDate) query = query.gte('created_at', startDate);
+    if (endDate) query = query.lte('created_at', endDate);
+
+    const { count: total } = await query;
+
+    // Get messages by intent
+    let intentQuery = supabase
+      .from('chat_analytics')
+      .select('intent, count', { count: 'exact' })
+      .not('intent', 'is', null);
+
+    if (startDate) intentQuery = intentQuery.gte('created_at', startDate);
+    if (endDate) intentQuery = intentQuery.lte('created_at', endDate);
+    if (intent) intentQuery = intentQuery.eq('intent', intent);
+
+    const { data: intentData } = await intentQuery;
+    const byIntent = intentData?.reduce((acc, { intent, count }) => {
+      if (intent) acc[intent] = parseInt(count, 10);
+      return acc;
+    }, {}) || {};
+
+    // Get messages by sentiment
+    let sentimentQuery = supabase
+      .from('chat_analytics')
+      .select('sentiment, count', { count: 'exact' })
+      .not('sentiment', 'is', null);
+
+    if (startDate) sentimentQuery = sentimentQuery.gte('created_at', startDate);
+    if (endDate) sentimentQuery = sentimentQuery.lte('created_at', endDate);
+    if (sentiment) sentimentQuery = sentimentQuery.eq('sentiment', sentiment);
+
+    const { data: sentimentData } = await sentimentQuery;
+    const bySentiment = sentimentData?.reduce((acc, { sentiment, count }) => {
+      if (sentiment) acc[sentiment] = parseInt(count, 10);
+      return acc;
+    }, {}) || { positive: 0, neutral: 0, negative: 0 };
+
+    // Get count of messages requiring follow-up
+    let followUpQuery = supabase
+      .from('chat_analytics')
+      .select('*', { count: 'exact', head: true })
+      .eq('requires_follow_up', true);
+
+    if (startDate) followUpQuery = followUpQuery.gte('created_at', startDate);
+    if (endDate) followUpQuery = followUpQuery.lte('created_at', endDate);
+
+    const { count: requiresFollowUp } = await followUpQuery;
+
+    // If only summary is requested, return early
+    if (summaryOnly) {
+      return res.json({
+        data: [],
+        summary: {
+          total: total || 0,
+          byIntent,
+          bySentiment,
+          requiresFollowUp: requiresFollowUp || 0,
+        },
+        pagination: {
+          total: 0,
+          limit: 0,
+          offset: 0,
+        },
+      });
+    }
+
+    // Get paginated chat messages with analytics
+    let messagesQuery = supabase
+      .from('chat_analytics')
+      .select(`
+        *,
+        chat_messages (
+          content,
+          role,
+          created_at,
+          metadata
+        )
+      `, { count: 'exact' })
+      .order('created_at', { ascending: false })
+      .range(parseInt(offset, 10), parseInt(offset, 10) + parseInt(limit, 10) - 1);
+
+    if (startDate) messagesQuery = messagesQuery.gte('created_at', startDate);
+    if (endDate) messagesQuery = messagesQuery.lte('created_at', endDate);
+    if (intent) messagesQuery = messagesQuery.eq('intent', intent);
+    if (sentiment) messagesQuery = messagesQuery.eq('sentiment', sentiment);
+
+    const { data: messages, count: totalCount } = await messagesQuery;
+
+    res.json({
+      data: messages || [],
+      summary: {
+        total: total || 0,
+        byIntent,
+        bySentiment,
+        requiresFollowUp: requiresFollowUp || 0,
+      },
+      pagination: {
+        total: totalCount || 0,
+        limit: parseInt(limit, 10),
+        offset: parseInt(offset, 10),
+      },
+    });
+  } catch (error) {
+    console.error('Error in analytics endpoint:', error);
+    res.status(500).json({ error: 'Failed to fetch analytics data' });
+  }
+});
+
 // Start the server in development
 if (process.env.NODE_ENV !== 'production') {
   startServer(PORT);

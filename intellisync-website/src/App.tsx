@@ -14,9 +14,7 @@ import WaitlistPage from "./pages/waitlist";
 import FAQ from "./pages/FAQ/FAQ";
 import ScrollToTop from './components/ScrollToTop';
 import MnemosysCaseStudyPage from "./pages/products/mnemosys-case-study";
-
-
-
+import AnalyticsDashboard from "./app/dashboard/analytics/page";
 
 import { streamModelResponse } from "./lib/streamModelResponse";
 import { useLocation } from "react-router-dom";
@@ -78,6 +76,7 @@ function App() {
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/store" element={<StorePage />} />
+          <Route path="/dashboard/analytics" element={<AnalyticsDashboard />} />
         </Routes>
         {/* StickyChat now gets eventContext from ChatWithContext, which is inside the Router context */}
         <ChatWithContext />
