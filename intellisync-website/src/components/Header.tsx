@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from './ui/Button';
-import { Info, Package, DollarSign, Percent, Bot, Mail, Home as HomeIcon, Menu, X } from 'lucide-react';
+
+import { Info, Package, DollarSign, Percent, Bot, Mail, Home as HomeIcon, Menu, X, ShoppingBag } from 'lucide-react';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -70,6 +70,10 @@ const Header: React.FC = () => {
               <Bot className="w-5 h-5 text-accent1" />
               <span>GPTBuilder</span>
             </a>
+            <a href="/store" className="flex items-center gap-2 text-gray-100 hover:text-accent1 transition-colors px-3 py-2">
+              <ShoppingBag className="w-5 h-5 text-accent1" />
+              <span>Store</span>
+            </a>
           </nav>
         </div>
 
@@ -87,15 +91,6 @@ const Header: React.FC = () => {
               <Menu className="block h-6 w-6" aria-hidden="true" />
             )}
           </button>
-        </div>
-
-        {/* Contact Button - Hidden on mobile, shown on desktop */}
-        <div className="hidden lg:block">
-          <a href="/waitlist">
-            <Button variant="default" size="lg" className="flex items-center gap-2">
-              <Mail className="w-5 h-5 text-accent2" /> Contact
-            </Button>
-          </a>
         </div>
       </div>
 
@@ -141,6 +136,12 @@ const Header: React.FC = () => {
             className="flex items-center gap-2 text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
           >
             <Bot className="w-5 h-5 text-accent1" /> GPTBuilder
+          </a>
+          <a
+            href="/store"
+            className="flex items-center gap-2 text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+          >
+            <ShoppingBag className="w-5 h-5 text-accent1" /> Store
           </a>
           <a
             href="/waitlist"
