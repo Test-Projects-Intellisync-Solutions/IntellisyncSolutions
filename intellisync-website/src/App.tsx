@@ -2,11 +2,11 @@ import Home from "./pages/home/Home";
 import About from "./pages/about/About";
 import GPTBuilder from './pages/GPTBuilder';
 import Pricing from './pages/Pricing/PricingPage';
-
+import StorePage from './pages/store/StorePage';
+import AppPage from './pages/AppPage';
 import PromotionsPage from './pages/promotions/PromotionsPage';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import ProductsPage from "./pages/products/ProductsPage";
 import DisclaimerPage from "./pages/disclaimer";
 import PrivacyPage from "./pages/privacy";
 import TermsPage from "./pages/terms";
@@ -49,6 +49,8 @@ function ChatWithContext() {
         return 'Home Page';
       case '/faq':
         return 'FAQ Page';
+      case '/store':
+        return 'Intellisync Store Page';
       default:
         return `Unknown Route: ${pathname}`;
     }
@@ -65,16 +67,17 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/products" element={<ProductsPage />} />
-          <Route path="/products/mnemosys-case-study" element={<MnemosysCaseStudyPage />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/mnemosys-case-study" element={<MnemosysCaseStudyPage />} />
+          <Route path="/apps/:slug" element={<AppPage />} />
           <Route path="/promotions" element={<PromotionsPage />} />
           <Route path="/gptbuilder" element={<GPTBuilder />} />
           <Route path="/pricing" element={<Pricing />} />
-          <Route path="/faq" element={<FAQ />} />
           <Route path="/waitlist" element={<WaitlistPage />} />
           <Route path="/disclaimer" element={<DisclaimerPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/terms" element={<TermsPage />} />
+          <Route path="/store" element={<StorePage />} />
         </Routes>
         {/* StickyChat now gets eventContext from ChatWithContext, which is inside the Router context */}
         <ChatWithContext />
