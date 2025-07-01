@@ -1,63 +1,154 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<!--
+  Sitemap for https://intellisync.io
+  Structured for optimal LLM parsing, SEO, and GEO (GPT Engine Optimization).
+  Includes priority tuning, semantic slugs, and lastmod frequency alignment.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" 
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" 
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+  <!-- ========== MAIN PAGES ========== -->
   <url>
-    <loc>https://intellisyncsolutions.com/</loc>
-    <lastmod>2025-06-19</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://intellisync.io/</loc>
+    <lastmod>2025-07-01</lastmod>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://intellisyncsolutions.com/about</loc>
-    <lastmod>2025-06-19</lastmod>
+    <loc>https://intellisync.io/pricing</loc>
+    <lastmod>2025-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://intellisync.io/promotions</loc>
+    <lastmod>2025-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://intellisyncsolutions.com/products</loc>
-    <lastmod>2025-06-19</lastmod>
+    <loc>https://intellisync.io/gptbuilder</loc>
+    <lastmod>2025-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://intellisyncsolutions.com/pricing</loc>
-    <lastmod>2025-06-19</lastmod>
+    <loc>https://intellisync.io/faq</loc>
+    <lastmod>2025-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://intellisync.io/about</loc>
+    <lastmod>2025-07-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://intellisync.io/products</loc>
+    <lastmod>2025-07-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- ========== ABOUT PAGES ========== -->
+  <url>
+    <loc>https://intellisync.io/about/how-we-work</loc>
+    <lastmod>2025-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://intellisync.io/about/team</loc>
+    <lastmod>2025-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://intellisync.io/about/mission</loc>
+    <lastmod>2025-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- ========== PRODUCTS PAGES ========== -->
+  <url>
+    <loc>https://intellisync.io/products/ai-solutions</loc>
+    <lastmod>2025-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://intellisyncsolutions.com/promotions</loc>
-    <lastmod>2025-06-19</lastmod>
+    <loc>https://intellisync.io/products/technology</loc>
+    <lastmod>2025-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://intellisyncsolutions.com/gptbuilder</loc>
-    <lastmod>2025-06-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://intellisync.io/products/case-studies</loc>
+    <lastmod>2025-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://intellisyncsolutions.com/faq</loc>
-    <lastmod>2025-06-19</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://intellisync.io/products/case-studies/mnemosys</loc>
+    <lastmod>2025-07-01</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <!-- ========== BLOG PAGES ========== -->
   <url>
-    <loc>https://intellisyncsolutions.com/terms</loc>
-    <lastmod>2025-06-19</lastmod>
+    <loc>https://intellisync.io/blog</loc>
+    <lastmod>2025-07-01</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
+  </url>
+  <!-- ========== LEGAL PAGES ========== -->
+  <url>
+    <loc>https://intellisync.io/terms</loc>
+    <lastmod>2025-07-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://intellisyncsolutions.com/privacy</loc>
-    <lastmod>2025-06-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://intellisync.io/privacy</loc>
+    <lastmod>2025-07-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://intellisyncsolutions.com/disclaimer</loc>
-    <lastmod>2025-06-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://intellisync.io/disclaimer</loc>
+    <lastmod>2025-07-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <!-- ========== OTHER PAGES ========== -->
+  <url>
+    <loc>https://intellisync.io/blog/what-youre-getting-wrong-about-ai</loc>
+    <lastmod>2025-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://intellisync.io/blog/from-data-overwhelm-to-confident-decisions</loc>
+    <lastmod>2025-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://intellisync.io/blog/end-of-app-bloat-rise-of-micro-saas-agents</loc>
+    <lastmod>2025-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://intellisync.io/blog/death-of-seo-rise-of-search-everything-optimization</loc>
+    <lastmod>2025-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://intellisync.io/blog/Humanity_2_0</loc>
+    <lastmod>2025-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>

@@ -1,6 +1,18 @@
-# robots.txt for home.intellisyncsolutions.io
-User-agent: *
-Allow: /
+# robots.txt for intellisync.io
 
-# Sitemaps
-Sitemap: https://home.intellisyncsolutions.io/sitemap.xml
+# Global rules
+User-agent: *
+Disallow: /api/
+Disallow: /private/
+Disallow: /admin/
+Disallow: /server-status
+
+# Crawl-delay (optional, polite crawl pacing)
+# Crawl-delay: 5
+
+# LLM optimization comments (not parsed but good for humans)
+# This site supports AI-enabled crawling and structured content discovery
+# via sitemap and semantic HTML tagging
+
+# Sitemap index
+Sitemap: https://intellisync.io/sitemap.xml
