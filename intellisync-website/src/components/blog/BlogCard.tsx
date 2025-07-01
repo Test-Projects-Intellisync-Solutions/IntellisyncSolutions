@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { BlogPost } from '../../types/blog';
 import { format } from 'date-fns';
+import { ReactionButton, CommentSection, ShareButton } from '../social';
 
 interface BlogCardProps {
   post: BlogPost;
@@ -49,6 +50,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, onView, index }) => {
         </div>
         
         <div className="flex items-center justify-between text-sm text-gray-500 pt-2 border-t border-gray-100">
+
           <div className="flex items-center">
             <span className="w-8 h-8 rounded-full bg-gray-200 overflow-hidden mr-2">
               <img 
@@ -63,6 +65,11 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, onView, index }) => {
             <div>{format(new Date(post.publishedAt), 'MMM d, yyyy')}</div>
             <div className="text-xs">{post.readTime} min read</div>
           </div>
+        </div>
+        <div className="flex items-center justify-around pt-4 mt-4 border-t border-gray-100">
+          <ReactionButton postId={post.id} />
+          <CommentSection postId={post.id} />
+          <ShareButton postUrl={`${window.location.origin}/blog/${post.slug}`} />
         </div>
       </div>
     </motion.article>
