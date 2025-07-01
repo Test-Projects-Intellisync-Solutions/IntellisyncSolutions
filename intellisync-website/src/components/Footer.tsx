@@ -79,6 +79,9 @@ const Footer: React.FC = () => {
             <a href="/faq" className="flex items-center gap-2 hover:text-accent1 transition-colors group">
               <Info size={16} className="text-accent1 group-hover:translate-x-1 transition-transform" /> FAQ
             </a>
+            <a href="/blog" className="flex items-center gap-2 hover:text-accent1 transition-colors group">
+              <FileText size={16} className="text-accent1 group-hover:translate-x-1 transition-transform" /> Blog
+            </a>
           </nav>
         </div>
         

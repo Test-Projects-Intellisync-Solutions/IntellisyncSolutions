@@ -11,6 +11,7 @@ import DisclaimerPage from "./pages/disclaimer";
 import PrivacyPage from "./pages/privacy";
 import TermsPage from "./pages/terms";
 import WaitlistPage from "./pages/waitlist";
+import Blog from "./pages/blog/Blog";
 import FAQ from "./pages/FAQ/FAQ";
 import ScrollToTop from './components/ScrollToTop';
 import MnemosysCaseStudyPage from "./pages/products/mnemosys-case-study";
@@ -52,6 +53,8 @@ function ChatWithContext() {
         return 'FAQ Page';
       case '/store':
         return 'Intellisync Store Page';
+      case '/blog':
+        return 'Blog Page';
       default:
         return `Unknown Route: ${pathname}`;
     }
@@ -80,6 +83,7 @@ function App() {
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/store" element={<StorePage />} />
           <Route path="/products" element={<ProductsPage />} />
+          <Route path="/blog" element={<Blog />} />
         </Routes>
         {/* StickyChat now gets eventContext from ChatWithContext, which is inside the Router context */}
         <ChatWithContext />
