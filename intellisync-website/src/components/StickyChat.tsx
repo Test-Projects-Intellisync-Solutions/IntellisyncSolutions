@@ -150,15 +150,26 @@ export const ChatInput: React.FC<ChatInputProps & { eventContext?: string }> = (
             }
           }}
         />
-        <Button
-          onClick={handleSend}
-          disabled={loading || !userPrompt.trim()}
-          variant="default"
-          size="icon"
-          className="rounded-full"
-        >
-          <img src="/assets/images/Chat%20Icon.png" alt="Chat Icon" className="w-5 h-5" />
-        </Button>
+        <div className="relative">
+          {/* Pulsing ring effect */}
+          <div className="absolute inset-0 rounded-full border-2 border-indigo-400 animate-ping opacity-0" style={{
+            animationDuration: '2s',
+            animationIterationCount: 'infinite'
+          }} />
+          
+          {/* Static ring */}
+          <div className="absolute inset-0 rounded-full border-2 border-indigo-400" />
+          
+          <Button
+            onClick={handleSend}
+            disabled={loading || !userPrompt.trim()}
+            variant="default"
+            size="icon"
+            className="rounded-full relative z-10 shadow-lg hover:scale-105 active:scale-95 transition-transform duration-200"
+          >
+            <img src="/assets/images/Chat%20Icon.png" alt="Chat Icon" className="w-5 h-5" />
+          </Button>
+        </div>
       </div>
     </div>
   );

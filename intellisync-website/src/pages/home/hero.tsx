@@ -3,8 +3,8 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Button } from '../../components/ui/Button'; // or wherever your Button component lives
 
-// Example hero image – replace with your actual image
-const HERO_IMAGE_URL = '/assets/images/homeHero.png';
+// Hero image path
+const HERO_IMAGE = '/assets/images/heroHome.png';
 
 const Hero: React.FC = () => {
   return (
@@ -62,11 +62,19 @@ const Hero: React.FC = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.7, ease: 'easeOut' }}
         >
-          <img
-            src={HERO_IMAGE_URL}
-            alt="Hero Person"
-            className="max-w-xs md:max-w-sm lg:max-w-md object-cover rounded-lg shadow-xl"
-          />
+          <div className="relative w-full max-w-md">
+            <img
+              src={HERO_IMAGE}
+              alt="AI Technology"
+              className="w-full h-auto max-h-[500px] rounded-lg shadow-xl object-contain transition-all duration-300 hover:scale-105"
+              onError={(e) => {
+                // Fallback in case the image fails to load
+                const target = e.target as HTMLImageElement;
+                target.onerror = null;
+                target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMWExYjJmIi8+CiAgPHRleHQgeD0iNTAlIiB5PSI1JSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSI+SW1hZ2Ugbm90IGZvdW5kPC90ZXh0PgogIDx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNjY2MiPkdQVEJ1aWxkZXJIZXJvLnBuZzwvdGV4dD4KPC9zdmc+'
+              }}
+            />
+          </div>
         </motion.div>
       </div>
       
