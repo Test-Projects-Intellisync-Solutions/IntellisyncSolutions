@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { BlogPost } from '../../types/blog';
+import { useAIContext } from '../../context/AIContext';
 import { Search, X, Filter } from 'lucide-react';
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
@@ -11,6 +12,7 @@ import BlogCard from '../../components/blog/BlogCard';
 import BlogModal from '../../components/blog/BlogModal';
 
 const Blog: React.FC = () => {
+  const { setEventContext } = useAIContext();
   const [allPosts, setAllPosts] = useState<BlogPost[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
@@ -83,12 +85,12 @@ const Blog: React.FC = () => {
 
   const handlePostClick = (post: BlogPost) => {
     setSelectedPost(post);
-    document.body.style.overflow = 'hidden';
+    setEventContext(`The user is currently viewing the blog post titled "${post.title}". Here is the full content of the post:\n\n${post.content}`);
   };
 
   const closeModal = () => {
     setSelectedPost(null);
-    document.body.style.overflow = 'auto';
+    setEventContext('Blog Page'); // Reset context when modal is closed
   };
 
   const currentPostIndex = selectedPost 
