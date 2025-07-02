@@ -438,7 +438,7 @@ const StorePage: React.FC = () => {
                     </div>
                   </div>
                   <p className="text-accent1 mb-4 text-sm">{app.description}</p>
-                  <div className="flex justify-between items-center">
+                  <div className="flex justify-between items-center mb-2">
                     <span className="px-3 py-1 bg-accent1/20 text-accent1 text-xs font-medium rounded-full">
                       {app.category}
                     </span>
@@ -451,6 +451,11 @@ const StorePage: React.FC = () => {
                         View Details
                       </Button>
                     </Link>
+                  </div>
+                  <div className="mt-2 flex justify-end">
+                    <span className="px-3 py-1 bg-yellow-500/20 text-yellow-400 text-xs font-medium rounded-full">
+                      Coming Soon
+                    </span>
                   </div>
                 </motion.div>
               ))}
