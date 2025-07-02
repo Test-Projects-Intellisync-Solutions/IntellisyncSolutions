@@ -6,7 +6,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   size?: "default" | "sm" | "lg" | "icon"
 }
 
-const buttonVariants = {
+export const buttonVariants = {
   default: "bg-accent1 text-[#232946] font-bold hover:bg-accent1/90",
   destructive: "bg-error text-white hover:bg-accent1",
   outline: "border border-accent2 bg-transparent text-primary hover:bg-surface",
@@ -16,7 +16,7 @@ const buttonVariants = {
   gold: "bg-accent1 text-white font-bold hover:bg-accent1/90",
 }
 
-const sizeVariants = {
+export const sizeVariants = {
   default: "h-9 sm:h-10 px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base",
   sm: "h-7 sm:h-8 px-2.5 sm:px-3 py-1 text-xs sm:text-sm",
   lg: "h-11 sm:h-12 px-4 sm:px-6 py-2.5 sm:py-3 text-base sm:text-lg",

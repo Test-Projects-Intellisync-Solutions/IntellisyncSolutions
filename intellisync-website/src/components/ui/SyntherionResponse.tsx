@@ -1,10 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { cn } from '../../lib/utils';
+import { buttonVariants, sizeVariants } from './Button';
 
 // Define the types for our JSON response formats
 type BaseResponse = {
   takeaway: string;
   reasoning?: string; // Optional reasoning field for all response types
+  internal_link?: string;
 };
 
 type StandardResponse = BaseResponse & {
@@ -134,6 +137,23 @@ const StandardResponseView: React.FC<{ data: StandardResponse; animate: boolean 
       >
         Takeaway: {data.takeaway}
       </motion.div>
+
+      {data.internal_link && (
+        <motion.div className="mt-6" variants={animate ? item : undefined}>
+          <a
+            href={data.internal_link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(
+              buttonVariants.default,
+              sizeVariants.default,
+              'font-bold rounded-md'
+            )}
+          >
+            Read More Here
+          </a>
+        </motion.div>
+      )}
     </Component>
   );
 };
@@ -201,6 +221,23 @@ const ProductResponseView: React.FC<{ data: ProductResponse; animate: boolean }>
       >
         Takeaway: {data.takeaway}
       </motion.div>
+      
+      {data.internal_link && (
+        <motion.div className="mt-6" variants={animate ? item : undefined}>
+          <a
+            href={data.internal_link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(
+              buttonVariants.default,
+              sizeVariants.default,
+              'font-bold rounded-md'
+            )}
+          >
+            Read More Here
+          </a>
+        </motion.div>
+      )}
     </Component>
   );
 };
@@ -275,6 +312,23 @@ const ServiceListResponseView: React.FC<{ data: ServiceListResponse; animate: bo
       >
         Takeaway: {data.takeaway}
       </motion.div>
+
+      {data.internal_link && (
+        <motion.div className="mt-6" variants={animate ? item : undefined}>
+          <a
+            href={data.internal_link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(
+              buttonVariants.default,
+              sizeVariants.default,
+              'font-bold rounded-md'
+            )}
+          >
+            Read More Here
+          </a>
+        </motion.div>
+      )}
     </Component>
   );
 };

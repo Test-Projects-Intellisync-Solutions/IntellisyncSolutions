@@ -476,7 +476,7 @@ export const StickyChat: React.FC<StickyChatProps> = ({ onSend, eventContext }) 
             <div className="flex-1 overflow-y-auto px-4 py-2 space-y-2 custom-scrollbar">
               {messages.length === 0 && !loading && (
                 <div className="text-center text-gray-400 text-sm mt-8">
-                  Start a conversation with Intellisync!
+                  Talk with Syntherion from Intellisync!
                 </div>
               )}
               {messages.map((msg, i) => (
@@ -553,7 +553,7 @@ export const StickyChat: React.FC<StickyChatProps> = ({ onSend, eventContext }) 
               {loading && (
                 <div className="flex justify-start">
                   <div className="px-4 py-2 rounded-2xl bg-zinc-100 dark:bg-zinc-800 text-black dark:text-white animate-pulse shadow-sm rounded-bl-md max-w-[80%]">
-                    Thinking...
+                    Writing...
                   </div>
                 </div>
               )}
